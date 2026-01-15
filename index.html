@@ -1,0 +1,2629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Brand & Growth Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 1%;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 1%;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+            overflow-x: auto;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 12px 8px;
+            text-align: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            color: #6c757d;
+            transition: all 0.3s;
+            white-space: nowrap;
+            min-width: 100px;
+        }
+        
+        .tab.active {
+            background: white;
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .content {
+            padding: 1%;
+            max-height: calc(100vh - 140px);
+            overflow-y: auto;
+        }
+        
+        .section {
+            display: none;
+            animation: fadeIn 0.4s;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .step-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 12px;
+            padding: 15px 1%;
+            margin-bottom: 12px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .step-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            font-weight: bold;
+            font-size: 13px;
+            margin-right: 10px;
+        }
+        
+        .step-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .step-description {
+            font-size: 13px;
+            color: #4a5568;
+            line-height: 1.6;
+            padding-left: 38px;
+        }
+        
+        .skill-category {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 12px 1%;
+            margin-bottom: 12px;
+        }
+        
+        .skill-category h3 {
+            font-size: 15px;
+            color: #667eea;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .skill-icon {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        .skill-list {
+            list-style: none;
+        }
+        
+        .skill-item {
+            padding: 8px 1%;
+            margin-bottom: 6px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .skill-item:before {
+            content: "✓";
+            color: #28a745;
+            font-weight: bold;
+            margin-right: 8px;
+            font-size: 14px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            transition: width 0.3s;
+        }
+        
+        .tip-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px 1%;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+        
+        .tip-box strong {
+            color: #856404;
+        }
+        
+        .action-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .action-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .checklist {
+            list-style: none;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 1%;
+            margin-bottom: 8px;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .checklist-item:hover {
+            border-color: #667eea;
+        }
+        
+        .checklist-item input {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .checklist-item label {
+            font-size: 13px;
+            cursor: pointer;
+            flex: 1;
+        }
+        
+        .checklist-item.completed {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+        
+        .checklist-item.completed label {
+            text-decoration: line-through;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>PERSONAL BRAND & GROWTH ASSISTANT</h1>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="showSection('instructions')">📋 Instructions</button>
+            <button class="tab" onclick="showSection('procedures')">📝 Procedures</button>
+            <button class="tab" onclick="showSection('beginner')">🎓 Beginner</button>
+            <button class="tab" onclick="showSection('advanced')">🚀 Advanced</button>
+            <button class="tab" onclick="showSection('specialized')">📱 Specialized</button>
+            <button class="tab" onclick="showSection('tools')">🛠️ Tools</button>
+            <button class="tab" onclick="showSection('reference')">⚡ Reference</button>
+            <button class="tab" onclick="showSection('glossary')">📖 Glossary</button>
+            <button class="tab" onclick="showSection('steps')">🎯 Step Guide</button>
+            <button class="tab" onclick="showSection('skills')">💪 Skills</button>
+            <button class="tab" onclick="showSection('checklist')">✅ Checklist</button>
+        </div>
+        
+        <div class="content">
+            <div id="instructions" class="section active">
+                <h2 style="font-size: 16px; color: #2d3748; margin-bottom: 15px;">Getting Started</h2>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">1</span>
+                        Define Your Purpose
+                    </div>
+                    <div class="step-description">
+                        Identify what you stand for and what makes you unique. Your personal brand should reflect your authentic self, values, and expertise.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">2</span>
+                        Know Your Audience
+                    </div>
+                    <div class="step-description">
+                        Research and understand who you want to reach. Create a profile of your ideal audience including their challenges, interests, and platforms they use.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">3</span>
+                        Build Your Online Presence
+                    </div>
+                    <div class="step-description">
+                        Establish profiles on relevant platforms (LinkedIn, Twitter, Instagram). Ensure consistency in your bio, profile picture, and messaging across all channels.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">4</span>
+                        Create Valuable Content
+                    </div>
+                    <div class="step-description">
+                        Share insights, experiences, and knowledge regularly. Mix educational content with personal stories to build connection and authority.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">5</span>
+                        Engage and Network
+                    </div>
+                    <div class="step-description">
+                        Actively comment on others' content, respond to messages, and participate in conversations. Build genuine relationships within your community.
+                    </div>
+                </div>
+                
+                <div class="tip-box">
+                    <strong>💡 Pro Tip:</strong> Consistency is key. Show up regularly, even if it's just 15 minutes daily. Small, consistent actions compound into significant results over time.
+                </div>
+            </div>
+            
+            <div id="procedures" class="section">
+                <h2 style="font-size: 16px; color: #2d3748; margin-bottom: 15px;">Getting Started Procedures</h2>
+                
+                <div style="background: #f8f9fa; padding: 10px 1%; border-radius: 8px; margin-bottom: 12px;">
+                    <strong style="font-size: 13px; color: #667eea;">📂 Navigate:</strong>
+                    <button onclick="document.getElementById('getting-started').scrollIntoView({behavior: 'smooth'})" style="margin: 5px; padding: 5px 10px; font-size: 12px; border: 1px solid #667eea; background: white; border-radius: 5px; cursor: pointer;">Getting Started</button>
+                    <button onclick="document.getElementById('content-creation').scrollIntoView({behavior: 'smooth'})" style="margin: 5px; padding: 5px 10px; font-size: 12px; border: 1px solid #667eea; background: white; border-radius: 5px; cursor: pointer;">Content Creation</button>
+                    <button onclick="document.getElementById('growth-procedures').scrollIntoView({behavior: 'smooth'})" style="margin: 5px; padding: 5px 10px; font-size: 12px; border: 1px solid #667eea; background: white; border-radius: 5px; cursor: pointer;">Growth Procedures</button>
+                    <button onclick="document.getElementById('monetization').scrollIntoView({behavior: 'smooth'})" style="margin: 5px; padding: 5px 10px; font-size: 12px; border: 1px solid #667eea; background: white; border-radius: 5px; cursor: pointer;">Monetization</button>
+                </div>
+                
+                <h3 id="getting-started" style="font-size: 15px; color: #667eea; margin: 20px 0 10px 0;">Getting Started Procedures</h3>
+                
+                <div class="skill-category" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; color: white;">
+                    <h3 style="color: white;"><span class="skill-icon">👤</span>How to Set Up Your First Social Media Profile</h3>
+                    <div style="padding: 8px 1%; font-size: 13px; line-height: 1.8;">
+                        <strong>Step 1:</strong> Choose your platform (LinkedIn for B2B, Instagram for lifestyle, Twitter for quick insights)<br>
+                        <strong>Step 2:</strong> Create account with professional username (firstname.lastname or brandname)<br>
+                        <strong>Step 3:</strong> Upload profile photo (clear face, good lighting, professional or friendly vibe)<br>
+                        <strong>Step 4:</strong> Write your bio using formula: [Who you are] | [What you do] | [Who you help]<br>
+                        <strong>Step 5:</strong> Add link to your main platform or website (use Linktree if multiple links)<br>
+                        <strong>Step 6:</strong> Upload cover/banner image with your name or value proposition<br>
+                        <strong>Step 7:</strong> Complete all profile fields (location, contact info, about section)<br>
+                        <strong>Step 8:</strong> Create 3-5 story highlights (Instagram) or featured content (LinkedIn)<br>
+                        <strong>Step 9:</strong> Follow 20-30 accounts in your niche to start building your feed<br>
+                        <strong>Step 10:</strong> Save your profile as a template for other platforms<br><br>
+                        <em>⏱️ Time needed: 30-45 minutes</em>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">📱</span>
+                        How to Create Your First Post (Idea to Publish)
+                    </div>
+                    <div class="step-description">
+                        <strong>Step 1:</strong> Identify your topic (answer: what problem can I solve for my audience today?)<br>
+                        <strong>Step 2:</strong> Choose your content type (educational tip, personal story, or quick insight)<br>
+                        <strong>Step 3:</strong> Write your hook (first line that grabs attention - use reference tab for formulas)<br>
+                        <strong>Step 4:</strong> Write the body (3-5 short paragraphs or bullet points with value)<br>
+                        <strong>Step 5:</strong> Add a call-to-action (question, "tag someone", "save this", "follow for more")<br>
+                        <strong>Step 6:</strong> Create or find a visual (use Canva templates or stock photos from Unsplash)<br>
+                        <strong>Step 7:</strong> Add relevant hashtags (3-5 for LinkedIn, 8-15 for Instagram)<br>
+                        <strong>Step 8:</strong> Preview your post (read it out loud - does it sound natural?)<br>
+                        <strong>Step 9:</strong> Schedule or post at optimal time (check reference tab for best times)<br>
+                        <strong>Step 10:</strong> Set a reminder to engage with comments in first 60 minutes<br><br>
+                        <em>⏱️ Time needed: 15-30 minutes</em>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">✍️</span>
+                        How to Write Your Bio in 10 Minutes
+                    </div>
+                    <div class="step-description">
+                        <strong>Step 1:</strong> Answer "What do I do?" in one sentence (be specific, avoid jargon)<br>
+                        <strong>Step 2:</strong> Answer "Who do I help?" (define your target audience clearly)<br>
+                        <strong>Step 3:</strong> Answer "What result do I provide?" (the transformation or outcome)<br>
+                        <strong>Step 4:</strong> Add credibility marker (years of experience, achievement, or unique angle)<br>
+                        <strong>Step 5:</strong> Write first draft combining these elements in 2-3 lines<br>
+                        <strong>Step 6:</strong> Remove filler words ("passionate", "helping people", generic terms)<br>
+                        <strong>Step 7:</strong> Add personality (emoji, unique phrase, or your approach)<br>
+                        <strong>Step 8:</strong> Add a call-to-action (DM me, check link, free resource)<br>
+                        <strong>Step 9:</strong> Test with 3 friends - can they explain what you do after reading?<br>
+                        <strong>Step 10:</strong> Copy to all your platforms with minor platform-specific tweaks<br><br>
+                        
+                        <strong>Example Formula:</strong><br>
+                        "[Job title] helping [audience] achieve [outcome]<br>
+                        [Unique approach or credibility]<br>
+                        [CTA] 👇"<br><br>
+                        <em>⏱️ Time needed: 10 minutes</em>
+                    </div>
+                </div>
+                
+                <div class="skill-category" style="background: #ffe5f3; border: 2px solid #ff4081;">
+                    <h3 style="color: #c51162;"><span class="skill-icon">🎨</span>How to Design Your First Graphic in Canva</h3>
+                    <div style="padding: 8px 1%; font-size: 13px; line-height: 1.8;">
+                        <strong>Step 1:</strong> Go to canva.com and create free account<br>
+                        <strong>Step 2:</strong> Click "Create a design" and select your platform size (Instagram Post, LinkedIn Post, etc.)<br>
+                        <strong>Step 3:</strong> Browse templates on left sidebar - search "[your niche] post"<br>
+                        <strong>Step 4:</strong> Click a template you like - it opens in editor<br>
+                        <strong>Step 5:</strong> Customize text by clicking and typing your message<br>
+                        <strong>Step 6:</strong> Change colors by clicking elements and selecting from color palette<br>
+                        <strong>Step 7:</strong> Replace images by clicking photo, then "Replace image" and upload your own<br>
+                        <strong>Step 8:</strong> Add elements from left sidebar (icons, shapes, stickers) if needed<br>
+                        <strong>Step 9:</strong> Ensure text is readable (high contrast, appropriate font size)<br>
+                        <strong>Step 10:</strong> Click "Share" → "Download" → select PNG → download to device<br>
+                        <strong>Step 11:</strong> Save your design in Canva for future edits<br>
+                        <strong>Step 12:</strong> Create a "Brand Kit" with your colors and fonts for consistency<br><br>
+                        <em>⏱️ Time needed: 10-15 minutes</em>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">📅</span>
+                        How to Schedule Your First Week of Content
+                    </div>
+                    <div class="step-description">
+                        <strong>Step 1:</strong> Open a spreadsheet or Notion page (content calendar template)<br>
+                        <strong>Step 2:</strong> List 7 days across the top, create columns: Date, Platform, Topic, Format, Status<br>
+                        <strong>Step 3:</strong> Decide posting frequency (start with 3-5 posts per week minimum)<br>
+                        <strong>Step 4:</strong> Brainstorm 7-10 content ideas based on: problems you solve, FAQs, your experience<br>
+                        <strong>Step 5:</strong> Assign one idea per posting day (vary content types: educational, story, tip, personal)<br>
+                        <strong>Step 6:</strong> Block 2-3 hours for "batch content creation day"<br>
+                        <strong>Step 7:</strong> During batch session: write all captions, create all graphics, save in folders<br>
+                        <strong>Step 8:</strong> Use scheduling tool (Buffer, Later, or platform's native scheduler)<br>
+                        <strong>Step 9:</strong> Upload content and schedule at optimal times (check reference tab)<br>
+                        <strong>Step 10:</strong> Set phone reminders to engage when posts go live<br>
+                        <strong>Step 11:</strong> Review calendar on Sunday evening for next week's content<br>
+                        <strong>Step 12:</strong> Track what performs well to inform future content<br><br>
+                        
+                        <strong>Content Mix for Week 1:</strong><br>
+                        Mon: Introduction post | Wed: Educational tip | Fri: Personal story<br>
+                        Tue: Quick insight | Thu: Q&A or poll<br><br>
+                        <em>⏱️ Time needed: 2-3 hours for batch creation + 30 min scheduling</em>
+                    </div>
+                </div>
+                
+                <div class="skill-category" style="background: #e8f5e9; border: 2px solid #4caf50;">
+                    <h3 style="color: #2e7d32;"><span class="skill-icon">⚡</span>Quick Start Checklist (Do This Today)</h3>
+                    <ul class="skill-list">
+                        <li class="skill-item" style="background: white;">Choose ONE primary platform to focus on</li>
+                        <li class="skill-item" style="background: white;">Set up your profile completely (30-45 min)</li>
+                        <li class="skill-item" style="background: white;">Write and optimize your bio (10 min)</li>
+                        <li class="skill-item" style="background: white;">Follow 20-30 accounts in your niche</li>
+                        <li class="skill-item" style="background: white;">Create your first post using the procedure above</li>
+                        <li class="skill-item" style="background: white;">Engage with 10 posts in your niche (comment thoughtfully)</li>
+                        <li class="skill-item" style="background: white;">Plan your first week of content topics</li>
+                        <li class="skill-item" style="background: white;">Set up Canva account and explore templates</li>
+                        <li class="skill-item" style="background: white;">Schedule time tomorrow to create Week 1 content</li>
+                        <li class="skill-item" style="background: white;">Commit to showing up for 30 days consistently</li>
+                    </ul>
+                </div>
+                
+                <div class="tip-box">
+                    <strong>🎯 Action Over Perfection:</strong> Your first post won't be perfect—and that's okay! The goal is to START. You'll improve with every post. Ship it, learn, iterate. That's how all successful creators began.
+                </div>
+                
+                <button class="action-btn" onclick="alert('Time to take action! Pick ONE procedure above and complete it TODAY. No more planning—execute! 🚀')">Start My First Procedure</button>
+                
+                <h3 id="content-creation" style="font-size: 15px; color: #667eea; margin: 30px 0 10px 0;">Content Creation Procedures</h3>
+                
+                <div class="skill-category" style="background: linear-gradient(135deg, #fa8231 0%, #f54ea2 100%); border: none; color: white;">
+                    <h3 style="color: white;"><span class="skill-icon">📦</span>How to Batch Create 1 Month of Content in 1 Day</h3>
+                    <div style="padding: 8px 1%; font-size: 13px; line-height: 1.8;">
+                        <strong>Preparation Phase (30 min):</strong><br>
+                        Step 1: Review your content pillars (3-5 main topics you talk about)<br>
+                        Step 2: Brainstorm 30-40 content ideas across your pillars<br>
+                        Step 3: Organize ideas in a spreadsheet with columns: Date, Topic, Format, Platform<br>
+                        Step 4: Gather inspiration (save 10-15 high-performing posts in your niche)<br>
+                        Step 5: Prepare your workspace (open Canva, notes app, turn off distractions)<br><br>
+                        
+                        <strong>Writing Phase (2 hours):</strong><br>
+                        Step 6: Set timer for 5 minutes per caption (quantity over perfection)<br>
+                        Step 7: Write hooks first for all 30 posts (just the opening line)<br>
+                        Step 8: Complete each caption using templates (reference tab has formulas)<br>
+                        Step 9: Save all captions in a Google Doc or notes app with labels<br>
+                        Step 10: Don't edit yet - just get all drafts done<br><br>
+                        
+                        <strong>Visual Creation Phase (3 hours):</strong><br>
+                        Step 11: Open Canva and select 3-5 templates that match your brand<br>
+                        Step 12: Customize first template with your colors and fonts<br>
+                        Step 13: Duplicate and modify for 10 posts (change text, images, colors)<br>
+                        Step 14: Repeat with other templates for variety<br>
+                        Step 15: Download all graphics in a labeled folder (Post1_Instagram.png, etc.)<br>
+                        Step 16: Create 5-10 quote graphics or testimonial slides<br><br>
+                        
+                        <strong>Editing & Scheduling Phase (1.5 hours):</strong><br>
+                        Step 17: Quick edit pass on all captions (fix typos, improve CTAs)<br>
+                        Step 18: Add hashtags to each post (save hashtag sets in notes)<br>
+                        Step 19: Upload content to scheduler (Buffer, Later, or native scheduler)<br>
+                        Step 20: Schedule posts at optimal times throughout the month<br>
+                        Step 21: Double-check all posts are scheduled correctly<br>
+                        Step 22: Set reminders in your calendar for engagement times<br><br>
+                        
+                        <em>⏱️ Total time: 6-7 hours (one focused day)</em>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">♻️</span>
+                        How to Repurpose 1 Piece of Content into 10 Formats
+                    </div>
+                    <div class="step-description">
+                        <strong>Start with ONE pillar piece</strong> (blog post, video, podcast episode, or long LinkedIn post)<br><br>
+                        
+                        <strong>Step 1:</strong> Choose your source content (something with 5+ key points or lessons)<br>
+                        <strong>Step 2:</strong> Extract main takeaways - write down 5-10 key insights from it<br>
+                        <strong>Step 3:</strong> <strong>Format #1:</strong> Twitter/X thread (break into 8-12 tweets)<br>
+                        <strong>Step 4:</strong> <strong>Format #2:</strong> Instagram carousel (10 slides with one point per slide)<br>
+                        <strong>Step 5:</strong> <strong>Format #3:</strong> LinkedIn post (750-1300 character summary)<br>
+                        <strong>Step 6:</strong> <strong>Format #4:</strong> 5 individual quote graphics (pull best quotes)<br>
+                        <strong>Step 7:</strong> <strong>Format #5:</strong> Email newsletter (expand with personal story)<br>
+                        <strong>Step 8:</strong> <strong>Format #6:</strong> Short video/Reel (30-60 sec summary with 3 tips)<br>
+                        <strong>Step 9:</strong> <strong>Format #7:</strong> Infographic (visual summary of key points)<br>
+                        <strong>Step 10:</strong> <strong>Format #8:</strong> Story series (15-20 Instagram/FB stories)<br>
+                        <strong>Step 11:</strong> <strong>Format #9:</strong> Podcast/audio snippet (2-3 min voice recording)<br>
+                        <strong>Step 12:</strong> <strong>Format #10:</strong> PDF guide or checklist (lead magnet version)<br>
+                        <strong>Step 13:</strong> Schedule these across 2-3 weeks on different platforms<br>
+                        <strong>Step 14:</strong> Track which format performs best for future repurposing<br><br>
+                        
+                        <strong>Pro Tip:</strong> Start with video → easier to extract audio, quotes, and text than other way around<br><br>
+                        <em>⏱️ Time needed: 2-3 hours for all 10 formats</em>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">🎬</span>
+                        How to Film and Edit Your First Reel/TikTok
+                    </div>
+                    <div class="step-description">
+                        <strong>Pre-Production (10 min):</strong><br>
+                        Step 1: Choose your topic (teaching moment, behind-the-scenes, or relatable content)<br>
+                        Step 2: Write a simple script or bullet points (keep under 60 seconds)<br>
+                        Step 3: Find trending audio on TikTok/Reels (100K-1M uses ideal)<br>
+                        Step 4: Plan your hook (first 1 second must grab attention)<br>
+                        Step 5: Set up filming location (good natural light, clean background)<br><br>
+                        
+                        <strong>Filming (15-20 min):</strong><br>
+                        Step 6: Position phone at eye level (use phone stand or prop it up)<br>
+                        Step 7: Record in vertical 9:16 format<br>
+                        Step 8: Film hook 5 times (pick best take)<br>
+                        Step 9: Record main content in 10-15 second clips<br>
+                        Step 10: Get multiple takes of each segment (you'll edit best parts together)<br>
+                        Step 11: Film B-roll if needed (extra footage for transitions)<br><br>
+                        
+                        <strong>Editing in CapCut (20-30 min):</strong><br>
+                        Step 12: Import all clips into CapCut app<br>
+                        Step 13: Arrange clips in order on timeline<br>
+                        Step 14: Trim clips to remove pauses and mistakes<br>
+                        Step 15: Add trending audio from CapCut library<br>
+                        Step 16: Use "Auto captions" feature (edit for accuracy)<br>
+                        Step 17: Add text overlays for emphasis on key points<br>
+                        Step 18: Apply smooth transitions between clips<br>
+                        Step 19: Add zoom effects on important moments<br>
+                        Step 20: Watch full video - does it keep attention? Trim anything boring<br>
+                        Step 21: Export in HD quality<br><br>
+                        
+                        <strong>Posting (5 min):</strong><br>
+                        Step 22: Upload to platform with engaging caption<br>
+                        Step 23: Add 3-5 relevant hashtags<br>
+                        Step 24: Choose eye-catching thumbnail (frame with your face/text)<br>
+                        Step 25: Post and engage with early comments immediately<br><br>
+                        
+                        <em>⏱️ Time needed: 45-60 minutes total</em>
+                    </div>
+                </div>
+                
+                <div class="skill-category" style="background: #e3f2fd; border: 2px solid #2196f3;">
+                    <h3 style="color: #1565c0;"><span class="skill-icon">🧵</span>How to Write a Viral Thread (Step-by-Step)</h3>
+                    <div style="padding: 8px 1%; font-size: 13px; line-height: 1.8;">
+                        <strong>Step 1:</strong> Choose a topic you have strong expertise or unique perspective on<br>
+                        <strong>Step 2:</strong> Identify the transformation (what will readers know after reading?)<br>
+                        <strong>Step 3:</strong> Write Tweet 1 - The Hook (must be scroll-stopping)<br>
+                        • Pattern: "I spent $50K learning [topic]. Here's what I'd do differently:"<br>
+                        • Or: "Most people do [topic] wrong. Here's the right way:"<br>
+                        <strong>Step 4:</strong> Write Tweet 2 - The Promise (what they'll learn)<br>
+                        • "In this thread: [specific number] lessons that [specific benefit]"<br>
+                        <strong>Step 5:</strong> Write Tweets 3-10 - The Value (one insight per tweet)<br>
+                        • Each tweet should be standalone valuable<br>
+                        • Use line breaks for readability<br>
+                        • Add emojis sparingly for visual breaks<br>
+                        <strong>Step 6:</strong> Write Tweet 11 - The Summary<br>
+                        • "To recap: [brief summary of main points]"<br>
+                        <strong>Step 7:</strong> Write Tweet 12 - The CTA<br>
+                        • "If you found this valuable: 1) Follow me @username 2) Retweet the first tweet"<br>
+                        <strong>Step 8:</strong> Edit for clarity (remove jargon, simplify sentences)<br>
+                        <strong>Step 9:</strong> Add a compelling image or GIF to first tweet<br>
+                        <strong>Step 10:</strong> Post thread during peak hours (8-10am or 7-9pm EST)<br>
+                        <strong>Step 11:</strong> Engage with every reply in first 2 hours<br>
+                        <strong>Step 12:</strong> Pin to profile if it performs well<br><br>
+                        
+                        <strong>Thread Formula:</strong> Hook → Promise → Value (8-12 tweets) → Summary → CTA<br><br>
+                        <em>⏱️ Time needed: 30-45 minutes</em>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">📊</span>
+                        How to Create a Carousel Post That Converts
+                    </div>
+                    <div class="step-description">
+                        <strong>Planning Phase:</strong><br>
+                        Step 1: Choose your topic (listicle works best: "5 ways to...", "7 mistakes to avoid...")<br>
+                        Step 2: Outline 8-10 key points you want to make<br>
+                        Step 3: Write engaging title for Slide 1 (this is your hook - make it bold)<br>
+                        Step 4: Plan your flow: Hook → Value → Value → Value → CTA<br><br>
+                        
+                        <strong>Design Phase (in Canva):</strong><br>
+                        Step 5: Search "Instagram carousel" in Canva templates<br>
+                        Step 6: Choose a template with clear hierarchy and good contrast<br>
+                        Step 7: Customize Slide 1 with your hook title + subtitle<br>
+                        Step 8: Add your branding (logo, colors, fonts) to establish consistency<br>
+                        Step 9: Create Slides 2-9 with ONE main point per slide<br>
+                        • Use large, readable fonts (minimum 40pt for body text)<br>
+                        • Keep text under 3 lines per slide<br>
+                        • Use consistent layout throughout<br>
+                        Step 10: Design final slide as CTA ("Follow for more", "Save this", "Tag a friend")<br>
+                        Step 11: Add page numbers (e.g., "1/10") on each slide<br>
+                        Step 12: Export as individual images (not PDF)<br><br>
+                        
+                        <strong>Posting Phase:</strong><br>
+                        Step 13: Upload all slides in order to Instagram/LinkedIn<br>
+                        Step 14: Write caption that expands on the topic (300-500 characters)<br>
+                        Step 15: Add strong CTA in caption matching final slide<br>
+                        Step 16: Include 5-8 strategic hashtags<br>
+                        Step 17: Post and engage with comments immediately<br><br>
+                        
+                        <strong>Pro Tips:</strong><br>
+                        • Use contrasting colors to make slides pop<br>
+                        • Test different carousel lengths (7-10 slides performs best)<br>
+                        • Slides with numbers/lists get higher engagement<br>
+                        • Make slide 1 so good people HAVE to swipe<br><br>
+                        
+                        <em>⏱️ Time needed: 45-60 minutes</em>
+                    </div>
+                </div>
+                
+                <div class="skill-category" style="background: #fff3e0; border: 2px solid #ff9800;">
+                    <h3 style="color: #e65100;"><span class="skill-icon">📸</span>Content Creation Quick Hacks</h3>
+                    <ul class="skill-list">
+                        <li class="skill-item" style="background: white;"><strong>Idea Bank:</strong> Keep a running list in your notes app - add ideas whenever inspiration hits</li>
+                        <li class="skill-item" style="background: white;"><strong>Voice Notes:</strong> Record thoughts while driving/walking - transcribe later with AI</li>
+                        <li class="skill-item" style="background: white;"><strong>Template System:</strong> Create 5 Canva templates, reuse with new text/colors</li>
+                        <li class="skill-item" style="background: white;"><strong>Batch Filming:</strong> Film 5-10 videos in one session (change shirt between takes)</li>
+                        <li class="skill-item" style="background: white;"><strong>AI Assistance:</strong> Use ChatGPT for caption ideas, then personalize with your voice</li>
+                        <li class="skill-item" style="background: white;"><strong>Repurpose First:</strong> Always ask "Can this be 3+ posts?" before creating new content</li>
+                        <li class="skill-item" style="background: white;"><strong>Phone Photos:</strong> Your best content tool - take 20 photos daily, use throughout week</li>
+                        <li class="skill-item" style="background: white;"><strong>Story Archives:</strong> Save your best stories as highlights - instant content library</li>
+                    </ul>
+                </div>
+                
+                <div class="tip-box">
+                    <strong>🎯 Content Creator Mindset:</strong> Everything is content. Your wins, struggles, lessons learned, daily observations—document it all. The content you think is "too simple" is often what your audience needs most.
+                </div>
+                
+                <button class="action-btn" onclick="alert('Pick ONE content procedure to master this week. Once you've done it 5 times, it becomes second nature! 💪')">Master This Procedure</button>
+                
+                <h3 id="growth-procedures" style="font-size: 15px; color: #667eea; margin: 30px 0 10px 0;">Growth Procedures</h3>
+                
+                <div class="skill-category" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); border: none; color: white;">
+                    <h3 style="color: white;"><span class="skill-icon">🎯</span>How to Find and Engage With Your Target Audience (Daily Routine)</h3>
+                    <div style="padding: 8px 1%; font-size: 13px; line-height: 1.8;">
+                        <strong>Morning Routine (15-20 min):</strong><br>
+                        Step 1: Identify 5-10 accounts in your niche with engaged audiences<br>
+                        Step 2: Check their latest posts (posted within last 24 hours)<br>
+                        Step 3: Read through comments to find engaged community members<br>
+                        Step 4: Visit profiles of people leaving thoughtful comments<br>
+                        Step 5: If they match your target audience, follow them<br><br>
+                        
+                        <strong>Engagement Routine (20-30 min):</strong><br>
+                        Step 6: Set timer for 20 minutes (focused engagement time)<br>
+                        Step 7: Scroll your feed and find 10 posts from your target audience<br>
+                        Step 8: Leave genuine, thoughtful comments (2-3 sentences minimum)<br>
+                        • Add value or ask intelligent questions<br>
+                        • Avoid generic "Great post!" comments<br>
+                        • Reference specific points from their content<br>
+                        Step 9: Respond to anyone who engages with your comment<br>
+                        Step 10: Like 2-3 other comments on the same post (build community)<br><br>
+                        
+                        <strong>Hashtag Mining (10 min):</strong><br>
+                        Step 11: Search relevant hashtags in your niche<br>
+                        Step 12: Filter by "Recent" posts (engage early for visibility)<br>
+                        Step 13: Find 5-7 posts with under 100 likes (smaller creators appreciate it)<br>
+                        Step 14: Leave valuable comments on these posts<br>
+                        Step 15: Follow accounts that consistently post quality content<br><br>
+                        
+                        <strong>DM Outreach (10-15 min):</strong><br>
+                        Step 16: Send 3-5 genuine DMs to people you've engaged with<br>
+                        Step 17: Reference something specific from their content<br>
+                        Step 18: Ask a question or offer help (no pitching yet)<br>
+                        Step 19: Build relationship first, business opportunities come later<br>
+                        Step 20: Keep DMs short and valuable (respect their time)<br><br>
+                        
+                        <strong>Track Your Activity:</strong><br>
+                        Step 21: Keep a simple log: Date, # of comments, # of DMs, # new followers<br>
+                        Step 22: Note which engagement leads to follows or conversations<br>
+                        Step 23: Double down on what works<br><br>
+                        
+                        <em>⏱️ Total daily time: 45-60 minutes | Results: 10-30 new followers per week</em>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">🤝</span>
+                        How to Collaborate With Another Creator (Outreach to Execution)
+                    </div>
+                    <div class="step-description">
+                        <strong>Research Phase (30 min):</strong><br>
+                        Step 1: Identify 10 potential collaborators (similar size, complementary niche)<br>
+                        Step 2: Study their content - what do they talk about? What's their style?<br>
+                        Step 3: Check their engagement rate (comments, saves, shares)<br>
+                        Step 4: Review if they've collaborated before (are they open to it?)<br>
+                        Step 5: Narrow down to 3-5 best fits<br><br>
+                        
+                        <strong>Warm-Up Phase (1-2 weeks):</strong><br>
+                        Step 6: Follow them and engage with their last 3-5 posts<br>
+                        Step 7: Leave thoughtful comments (show you actually consume their content)<br>
+                        Step 8: Share one of their posts to your story with positive commentary<br>
+                        Step 9: Tag them when relevant (don't force it)<br>
+                        Step 10: Build rapport before pitching collaboration<br><br>
+                        
+                        <strong>Outreach Phase (Day 1):</strong><br>
+                        Step 11: Send DM during their active hours (check when they post)<br>
+                        Step 12: Use this template (personalize it!):<br>
+                        "Hey [Name]! I've been following your content on [specific topic] and loved your recent post about [specific thing]. I'm [your intro] and noticed our audiences overlap. I'd love to collaborate on [specific idea]. Would you be interested in chatting about it?"<br><br>
+                        
+                        <strong>Planning Phase (Week 1):</strong><br>
+                        Step 13: If they respond positively, schedule a quick call or detailed DM exchange<br>
+                        Step 14: Discuss collaboration ideas: IG Live, carousel swap, joint giveaway, etc.<br>
+                        Step 15: Agree on format, timeline, and deliverables<br>
+                        Step 16: Define how you'll promote each other (tags, stories, posts)<br>
+                        Step 17: Set clear deadlines and expectations<br><br>
+                        
+                        <strong>Execution Phase (Week 2-3):</strong><br>
+                        Step 18: Create your part of collaboration content<br>
+                        Step 19: Share drafts with collaborator for approval<br>
+                        Step 20: Schedule posting times (same day for maximum impact)<br>
+                        Step 21: Prepare promotional stories and tags<br><br>
+                        
+                        <strong>Launch & Follow-Up:</strong><br>
+                        Step 22: Post collaboration content simultaneously<br>
+                        Step 23: Tag each other in posts and stories<br>
+                        Step 24: Engage heavily with comments on both posts<br>
+                        Step 25: Track results (followers gained, engagement, reach)<br>
+                        Step 26: Thank your collaborator publicly and privately<br>
+                        Step 27: Discuss future collaboration opportunities<br><br>
+                        
+                        <em>⏱️ Timeline: 3-4 weeks from research to execution</em>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">📊</span>
+                        How to Analyze Your Analytics and Adjust Strategy
+                    </div>
+                    <div class="step-description">
+                        <strong>Weekly Analytics Review (30 min every Sunday):</strong><br>
+                        Step 1: Open platform analytics (Instagram Insights, LinkedIn Analytics, etc.)<br>
+                        Step 2: Review date range: last 7 days<br>
+                        Step 3: Note follower growth: gained vs lost (net growth)<br>
+                        Step 4: Check reach and impressions trends (going up or down?)<br>
+                        Step 5: Calculate engagement rate: (likes + comments + shares) / followers × 100<br><br>
+                        
+                        <strong>Content Performance Analysis:</strong><br>
+                        Step 6: Sort posts by engagement (highest to lowest)<br>
+                        Step 7: Identify top 3 performing posts - ask WHY they worked:<br>
+                        • What was the topic?<br>
+                        • What format? (video, carousel, text, image)<br>
+                        • What was the hook?<br>
+                        • When was it posted?<br>
+                        Step 8: Identify bottom 3 posts - ask WHY they flopped:<br>
+                        • Was timing off?<br>
+                        • Was hook weak?<br>
+                        • Was topic not relevant to audience?<br>
+                        Step 9: Look for patterns across all content<br><br>
+                        
+                        <strong>Audience Insights:</strong><br>
+                        Step 10: Check demographics (age, location, gender)<br>
+                        Step 11: Note when your audience is most active online<br>
+                        Step 12: Review which hashtags drove most reach<br>
+                        Step 13: Check website clicks or link clicks (if applicable)<br><br>
+                        
+                        <strong>Strategy Adjustments:</strong><br>
+                        Step 14: Create action items based on findings:<br>
+                        • "Post more [format that worked]"<br>
+                        • "Talk more about [topic with high engagement]"<br>
+                        • "Post at [optimal time] instead of [current time]"<br>
+                        • "Use [these hashtags] more often"<br>
+                        Step 15: Update your content calendar with these insights<br>
+                        Step 16: Set 1-2 specific goals for next week<br>
+                        Step 17: Document changes in a growth journal<br><br>
+                        
+                        <strong>Monthly Deep Dive (1 hour):</strong><br>
+                        Step 18: Review full month of analytics<br>
+                        Step 19: Compare to previous month (% growth in all metrics)<br>
+                        Step 20: Identify your 5 best-performing pieces of content<br>
+                        Step 21: Plan to create more content similar to top performers<br>
+                        Step 22: Adjust overall content strategy based on data<br><br>
+                        
+                        <em>⏱️ Weekly: 30 min | Monthly: 1 hour</em>
+                    </div>
+                </div>
+                
+                <div class="skill-category" style="background: #fce4ec; border: 2px solid #e91e63;">
+                    <h3 style="color: #880e4f;"><span class="skill-icon">🎁</span>How to Run Your First Giveaway or Challenge</h3>
+                    <div style="padding: 8px 1%; font-size: 13px; line-height: 1.8;">
+                        <strong>Planning Phase (1 week before):</strong><br>
+                        Step 1: Choose giveaway type: Product, Service, or Digital (e-book, course access)<br>
+                        Step 2: Set prize value ($50-$200 sweet spot for small accounts)<br>
+                        Step 3: Decide entry requirements (Follow + Like + Comment + Tag is standard)<br>
+                        Step 4: Optional: Partner with 1-2 other creators (split cost, triple reach)<br>
+                        Step 5: Set duration (5-7 days is optimal)<br>
+                        Step 6: Create eye-catching giveaway graphic in Canva<br>
+                        Step 7: Write clear rules and terms (age, location restrictions, etc.)<br><br>
+                        
+                        <strong>Promotion Phase:</strong><br>
+                        Step 8: Announce giveaway with post (include all rules in caption)<br>
+                        Step 9: Pin giveaway post to your profile<br>
+                        Step 10: Share to stories daily with countdown sticker<br>
+                        Step 11: Create reminder posts ("2 days left to enter!")<br>
+                        Step 12: If collaborating, cross-promote on all partner accounts<br>
+                        Step 13: Reply to every comment to boost engagement<br><br>
+                        
+                        <strong>Selection & Announcement:</strong><br>
+                        Step 14: Use random comment picker tool (commentpicker.com)<br>
+                        Step 15: Verify winner follows all requirements<br>
+                        Step 16: DM winner privately first (24-hour response deadline)<br>
+                        Step 17: Announce winner publicly in stories and post<br>
+                        Step 18: Thank everyone who participated<br>
+                        Step 19: Deliver prize promptly<br>
+                        Step 20: Post winner testimonial/photo (with permission)<br><br>
+                        
+                        <strong>Alternative: 7-Day Challenge:</strong><br>
+                        • Better for engagement than follower growth<br>
+                        • Create daily prompts related to your niche<br>
+                        • Use branded hashtag to track participants<br>
+                        • Feature best submissions daily<br>
+                        • Build community through shared experience<br><br>
+                        
+                        <em>Expected results: 100-500 new followers (depending on prize value)</em>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">💼</span>
+                        How to Pitch a Brand Partnership
+                    </div>
+                    <div class="step-description">
+                        <strong>Preparation Phase:</strong><br>
+                        Step 1: Reach minimum threshold (usually 5K-10K engaged followers)<br>
+                        Step 2: Create professional media kit including:<br>
+                        • Your bio and niche<br>
+                        • Follower count and engagement rate<br>
+                        • Demographics (age, location, interests of audience)<br>
+                        • Past collaboration examples<br>
+                        • Services offered and pricing<br>
+                        Step 3: Screenshot your best-performing analytics<br>
+                        Step 4: Save as PDF: "[YourName]_MediaKit_2026.pdf"<br><br>
+                        
+                        <strong>Research Phase:</strong><br>
+                        Step 5: Identify 10 brands that align with your values and audience<br>
+                        Step 6: Check if they work with creators (search "[brand] + influencer")<br>
+                        Step 7: Find contact email (marketing@, partnerships@, or DM)<br>
+                        Step 8: Study their current campaigns and messaging<br>
+                        Step 9: Think about how YOU can add value to THEM<br><br>
+                        
+                        <strong>Outreach Phase:</strong><br>
+                        Step 10: Email subject: "Partnership Opportunity: [Your Name] x [Brand Name]"<br>
+                        Step 11: Email template:<br>
+                        "Hi [Name],<br>
+                        I'm [Name], a [niche] creator with [X] engaged followers. I love [specific thing about brand/product].<br>
+                        I'd love to collaborate on [specific campaign idea] that would provide [value to them].<br>
+                        My audience of [demographic] aligns perfectly with your target market.<br>
+                        I've attached my media kit for your review. Would you be open to discussing partnership opportunities?<br>
+                        Best, [Name]"<br><br>
+                        
+                        <strong>Negotiation Phase:</strong><br>
+                        Step 12: If they respond, discuss deliverables clearly<br>
+                        Step 13: Pricing formula: (Followers / 1000) × $10-$20 per post<br>
+                        Step 14: Negotiate usage rights, exclusivity, timeline<br>
+                        Step 15: Get everything in writing (contract or detailed email)<br><br>
+                        
+                        <strong>Execution & Delivery:</strong><br>
+                        Step 16: Create authentic content (your voice + their product)<br>
+                        Step 17: Get brand approval before posting<br>
+                        Step 18: Post according to agreed schedule<br>
+                        Step 19: Send analytics report after campaign<br>
+                        Step 20: Invoice promptly (Net 30 is standard)<br><br>
+                        
+                        <em>⏱️ From pitch to payment: 2-8 weeks typically</em>
+                    </div>
+                </div>
+                
+                <div class="skill-category" style="background: #e8f5e9; border: 2px solid #4caf50;">
+                    <h3 style="color: #2e7d32;"><span class="skill-icon">🚀</span>Growth Hacks That Actually Work</h3>
+                    <ul class="skill-list">
+                        <li class="skill-item" style="background: white;"><strong>Golden Hour Engagement:</strong> Comment on posts within first 60 min for max visibility</li>
+                        <li class="skill-item" style="background: white;"><strong>Strategic Following:</strong> Follow engaged commenters on competitor posts, unfollow non-followers after 7 days</li>
+                        <li class="skill-item" style="background: white;"><strong>Collaboration Pods:</strong> Join 5-10 creator groups who engage on each other's content early</li>
+                        <li class="skill-item" style="background: white;"><strong>Controversy (Careful):</strong> Take polarizing stand on industry topic (builds passionate community)</li>
+                        <li class="skill-item" style="background: white;"><strong>Story Replies:</strong> Reply to 20 stories daily with thoughtful responses (high DM rate)</li>
+                        <li class="skill-item" style="background: white;"><strong>Value Bombs:</strong> Give away best content for free (builds trust, leads to sales later)</li>
+                        <li class="skill-item" style="background: white;"><strong>Consistent Posting:</strong> Algorithm rewards consistency - post 5x/week minimum</li>
+                        <li class="skill-item" style="background: white;"><strong>Ride Trends Early:</strong> Jump on trending formats within first 48 hours of emergence</li>
+                    </ul>
+                </div>
+                
+                <div class="tip-box">
+                    <strong>📈 Growth Reality Check:</strong> Sustainable growth takes 6-12 months minimum. Focus on genuine relationships over vanity metrics. 100 engaged followers > 10,000 ghost followers. Quality always beats quantity.
+                </div>
+                
+                <button class="action-btn" onclick="alert('Growth is a marathon, not a sprint! Pick ONE growth procedure and commit to it for 30 days straight. Track your progress daily. 📈')">Start Growing Today</button>
+                
+                <h3 id="monetization" style="font-size: 15px; color: #667eea; margin: 30px 0 10px 0;">Monetization Procedures</h3>
+                
+                <div class="skill-category" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border: none; color: white;">
+                    <h3 style="color: white;"><span class="skill-icon">💰</span>How to Create Your First Digital Product in 7 Days</h3>
+                    <div style="padding: 8px 1%; font-size: 13px; line-height: 1.8;">
+                        <strong>Day 1 - Identify Your Product (2 hours):</strong><br>
+                        Step 1: List top 10 questions your audience asks you repeatedly<br>
+                        Step 2: Identify their biggest pain point you can solve<br>
+                        Step 3: Choose product type: Template, Checklist, Guide, Mini-Course, or Workbook<br>
+                        Step 4: Validate idea by posting "Would you buy [product] for [price]?" poll<br>
+                        Step 5: Get 5-10 responses before proceeding<br><br>
+                        
+                        <strong>Day 2-3 - Create Content (4-6 hours):</strong><br>
+                        Step 6: Outline your product (5-10 main sections or steps)<br>
+                        Step 7: Write content in Google Docs (aim for 10-30 pages depending on type)<br>
+                        Step 8: Include actionable steps, examples, templates<br>
+                        Step 9: Add visuals, diagrams, or screenshots where helpful<br>
+                        Step 10: Write in your authentic voice (like you're helping a friend)<br><br>
+                        
+                        <strong>Day 4 - Design & Format (3-4 hours):</strong><br>
+                        Step 11: Choose Canva or Google Docs for formatting<br>
+                        Step 12: Create branded template (your colors, fonts, logo)<br>
+                        Step 13: Design attractive cover page<br>
+                        Step 14: Format content with headers, bullet points, white space<br>
+                        Step 15: Add page numbers and table of contents<br>
+                        Step 16: Export as PDF (ensure it's readable on mobile)<br><br>
+                        
+                        <strong>Day 5 - Set Up Sales Page (2-3 hours):</strong><br>
+                        Step 17: Create Gumroad account (easiest for beginners)<br>
+                        Step 18: Upload your PDF product<br>
+                        Step 19: Write compelling product description (problem → solution → transformation)<br>
+                        Step 20: Set price ($7-$47 for first product - test pricing)<br>
+                        Step 21: Create preview images/mockups using Canva<br>
+                        Step 22: Set up payment processing (Stripe through Gumroad)<br><br>
+                        
+                        <strong>Day 6 - Create Launch Content (2 hours):</strong><br>
+                        Step 23: Design 5 promotional graphics highlighting benefits<br>
+                        Step 24: Write launch email if you have a list<br>
+                        Step 25: Create 3-5 social media posts teasing the product<br>
+                        Step 26: Record short video explaining what's inside<br>
+                        Step 27: Prepare testimonial/social proof (even if from beta testers)<br><br>
+                        
+                        <strong>Day 7 - Launch! (Launch day + ongoing):</strong><br>
+                        Step 28: Announce to email list first (early bird bonus?)<br>
+                        Step 29: Post on all social platforms with clear CTA<br>
+                        Step 30: Share to stories multiple times throughout day<br>
+                        Step 31: Engage with everyone who comments<br>
+                        Step 32: Send personal DMs to people who've asked about this topic<br>
+                        Step 33: Track sales and gather feedback from first buyers<br>
+                        Step 34: Iterate based on feedback for Version 2.0<br><br>
+                        
+                        <strong>Pricing Guide:</strong><br>
+                        Checklist/Template: $7-$17 | Guide/Workbook: $17-$47 | Mini-Course: $47-$97<br><br>
+                        
+                        <em>⏱️ Total time: 15-20 hours | Expected first month: $100-$500</em>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">📧</span>
+                        How to Set Up Email Automation Sequence
+                    </div>
+                    <div class="step-description">
+                        <strong>Setup Phase (Day 1):</strong><br>
+                        Step 1: Choose email platform (ConvertKit, Mailchimp, or Beehiiv)<br>
+                        Step 2: Create free account (most offer 500-1000 subscribers free)<br>
+                        Step 3: Set up basic account (sender name, email address, branding)<br>
+                        Step 4: Create your first "form" or "landing page" for signups<br>
+                        Step 5: Connect domain if you have one (optional but professional)<br><br>
+                        
+                        <strong>Lead Magnet Creation (Day 2):</strong><br>
+                        Step 6: Create valuable free resource (checklist, guide, template)<br>
+                        Step 7: Design simple 1-5 page PDF in Canva<br>
+                        Step 8: Upload to Gumroad or Google Drive for delivery<br>
+                        Step 9: Get shareable link for automated delivery<br><br>
+                        
+                        <strong>Welcome Sequence Writing (Day 3-4):</strong><br>
+                        Step 10: Write Email 1 - Welcome + Deliver Lead Magnet<br>
+                        • Subject: "Here's your [Lead Magnet Name]! 🎁"<br>
+                        • Deliver the promised resource<br>
+                        • Brief personal introduction<br>
+                        • Set expectations (what they'll receive from you)<br><br>
+                        
+                        Step 11: Write Email 2 (Day 2) - Quick Win<br>
+                        • Subject: "Try this [quick tip] today"<br>
+                        • Provide immediate actionable value<br>
+                        • Build trust and credibility<br><br>
+                        
+                        Step 12: Write Email 3 (Day 4) - Personal Story<br>
+                        • Subject: "How I [overcame challenge/achieved result]"<br>
+                        • Share vulnerable story + lesson learned<br>
+                        • Deeper connection building<br><br>
+                        
+                        Step 13: Write Email 4 (Day 6) - Social Proof<br>
+                        • Subject: "Here's what [Name] achieved..."<br>
+                        • Share testimonial or case study<br>
+                        • Show what's possible<br><br>
+                        
+                        Step 14: Write Email 5 (Day 8) - Soft Pitch<br>
+                        • Subject: "Ready to [achieve outcome]?"<br>
+                        • Introduce your paid offer naturally<br>
+                        • Focus on transformation, not features<br><br>
+                        
+                        Step 15: Write Email 6 (Day 10) - FAQ/Objections<br>
+                        • Address common concerns about your offer<br>
+                        • Provide additional value even if they don't buy<br><br>
+                        
+                        Step 16: Write Email 7 (Day 12) - Final CTA<br>
+                        • Last chance to grab offer (if time-sensitive)<br>
+                        • Transition to regular newsletter if they don't convert<br><br>
+                        
+                        <strong>Automation Setup (Day 5):</strong><br>
+                        Step 17: Create "automation" or "sequence" in your email platform<br>
+                        Step 18: Set trigger: "When someone subscribes to [form name]"<br>
+                        Step 19: Add all 7 emails in sequence with delays (0, 2, 4, 6, 8, 10, 12 days)<br>
+                        Step 20: Test sequence by subscribing yourself<br>
+                        Step 21: Check all links work and formatting looks good on mobile<br><br>
+                        
+                        <strong>Promotion & Growth:</strong><br>
+                        Step 22: Add signup form link to all social media bios<br>
+                        Step 23: Create posts promoting your lead magnet weekly<br>
+                        Step 24: Mention in relevant posts: "Link in bio for free guide"<br>
+                        Step 25: Track conversion rates and adjust emails monthly<br><br>
+                        
+                        <em>⏱️ Setup time: 8-12 hours | Expected conversion to paid: 5-15%</em>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">💵</span>
+                        How to Calculate Your Rates for Sponsored Posts
+                    </div>
+                    <div class="step-description">
+                        <strong>Step 1: Gather Your Data</strong><br>
+                        • Total follower count across platforms<br>
+                        • Average engagement rate (last 30 posts)<br>
+                        • Average reach per post<br>
+                        • Audience demographics (age, location, interests)<br>
+                        • Average video views (if applicable)<br><br>
+                        
+                        <strong>Step 2: Calculate Base Rate</strong><br>
+                        <strong>Formula: (Followers ÷ 1,000) × $10-$20 = Base Rate Per Post</strong><br><br>
+                        
+                        Examples:<br>
+                        • 5K followers: $50-$100 per post<br>
+                        • 10K followers: $100-$200 per post<br>
+                        • 25K followers: $250-$500 per post<br>
+                        • 50K followers: $500-$1,000 per post<br>
+                        • 100K followers: $1,000-$2,000 per post<br><br>
+                        
+                        <strong>Step 3: Adjust for Engagement Rate</strong><br>
+                        • Under 2% engagement: -20% from base rate<br>
+                        • 2-5% engagement: Use base rate<br>
+                        • 5-10% engagement: +30% to base rate<br>
+                        • Over 10% engagement: +50% to base rate<br><br>
+                        
+                        <strong>Step 4: Factor in Content Type</strong><br>
+                        • Static image post: Base rate<br>
+                        • Carousel post: Base rate + 20%<br>
+                        • Video/Reel: Base rate + 50%<br>
+                        • Story series (5-10 stories): Base rate × 0.5<br>
+                        • Blog post/YouTube video: Base rate × 2-3<br><br>
+                        
+                        <strong>Step 5: Consider Usage Rights</strong><br>
+                        • Social media only: Base rate<br>
+                        • Brand can repost (30 days): +25%<br>
+                        • Brand can repost (90 days): +50%<br>
+                        • Full usage rights (ads, website): +100-200%<br>
+                        • Exclusivity clause (can't work with competitors): +50-100%<br><br>
+                        
+                        <strong>Step 6: Account for Deliverables</strong><br>
+                        Single post: Base rate<br>
+                        Multiple posts (3-5): 15% discount on total<br>
+                        Monthly retainer: (Base rate × 4-8) - 20% volume discount<br><br>
+                        
+                        <strong>Step 7: Create Your Rate Card</strong><br>
+                        • List all services with prices<br>
+                        • Include package deals<br>
+                        • Specify what's included in each tier<br>
+                        • Add "Custom packages available"<br>
+                        • Update quarterly as you grow<br><br>
+                        
+                        <strong>Negotiation Tips:</strong><br>
+                        • Start 20% higher than your minimum (room to negotiate)<br>
+                        • Be willing to negotiate, but know your floor<br>
+                        • Consider product exchange + cash for win-win<br>
+                        • Get everything in writing before starting work<br><br>
+                        
+                        <em>💡 Remember: Your rates should increase as your audience and authority grow!</em>
+                    </div>
+                </div>
+                
+                <div class="skill-category" style="background: #fff3e0; border: 2px solid #ff9800;">
+                    <h3 style="color: #e65100;"><span class="skill-icon">📄</span>How to Create a Media Kit for Brands</h3>
+                    <div style="padding: 8px 1%; font-size: 13px; line-height: 1.8;">
+                        <strong>Page 1 - Cover/Introduction:</strong><br>
+                        Step 1: Open Canva and search "Media Kit" templates<br>
+                        Step 2: Choose professional template matching your brand<br>
+                        Step 3: Add professional photo of yourself<br>
+                        Step 4: Include your name, tagline, and main platforms<br>
+                        Step 5: Add contact email prominently<br><br>
+                        
+                        <strong>Page 2 - About You:</strong><br>
+                        Step 6: Write 3-4 sentence bio (who you are, what you do, who you serve)<br>
+                        Step 7: List your content pillars/topics<br>
+                        Step 8: Mention any notable achievements or features<br>
+                        Step 9: Include personal photo (humanize your brand)<br><br>
+                        
+                        <strong>Page 3 - Audience Demographics:</strong><br>
+                        Step 10: Get data from platform insights<br>
+                        Step 11: Create visual charts showing:<br>
+                        • Age breakdown (18-24: 30%, 25-34: 45%, etc.)<br>
+                        • Gender split<br>
+                        • Top 5 locations/countries<br>
+                        • Interests and professions<br>
+                        Step 12: Highlight what makes your audience valuable<br><br>
+                        
+                        <strong>Page 4 - Platform Statistics:</strong><br>
+                        Step 13: List each platform with follower count<br>
+                        Step 14: Show average engagement rate per platform<br>
+                        Step 15: Include average reach and impressions<br>
+                        Step 16: Add growth metrics (% increase month-over-month)<br>
+                        Step 17: Screenshot your best-performing posts<br><br>
+                        
+                        <strong>Page 5 - Services & Rates:</strong><br>
+                        Step 18: List all services you offer (sponsored posts, stories, videos, etc.)<br>
+                        Step 19: Option A: Include specific rates<br>
+                        Step 20: Option B: Say "Rates available upon request" (if just starting)<br>
+                        Step 21: Mention custom package availability<br><br>
+                        
+                        <strong>Page 6 - Past Collaborations:</strong><br>
+                        Step 22: Showcase 3-5 brands you've worked with<br>
+                        Step 23: Include screenshots of sponsored posts<br>
+                        Step 24: Add testimonials or results if available<br>
+                        Step 25: If no brand work yet, show quality of your own content<br><br>
+                        
+                        <strong>Page 7 - Contact & Next Steps:</strong><br>
+                        Step 26: List all contact methods (email, DM, phone)<br>
+                        Step 27: Include response time expectations<br>
+                        Step 28: Add website or portfolio link<br>
+                        Step 29: End with compelling CTA: "Let's create something amazing together!"<br><br>
+                        
+                        <strong>Final Steps:</strong><br>
+                        Step 30: Export as PDF (keep file size under 5MB)<br>
+                        Step 31: Name file: "YourName_MediaKit_2026.pdf"<br>
+                        Step 32: Upload to Google Drive with public link<br>
+                        Step 33: Add link to all your social bios<br>
+                        Step 34: Update quarterly with new stats<br><br>
+                        
+                        <em>⏱️ Creation time: 3-4 hours | Update quarterly</em>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">🎓</span>
+                        How to Launch Your First Coaching/Consulting Offer
+                    </div>
+                    <div class="step-description">
+                        <strong>Week 1 - Validate & Package:</strong><br>
+                        Step 1: Identify your expertise (what can you help people achieve?)<br>
+                        Step 2: Define your ideal client (who needs this most?)<br>
+                        Step 3: Survey audience: "What's your biggest challenge with [topic]?"<br>
+                        Step 4: Get 10-20 responses to validate demand<br>
+                        Step 5: Package your offer:<br>
+                        • What's included (1-on-1 calls, resources, support)<br>
+                        • Duration (30-day, 90-day programs work well)<br>
+                        • Deliverable/outcome (specific transformation)<br>
+                        Step 6: Set pricing ($500-$2000 for first clients)<br><br>
+                        
+                        <strong>Week 2 - Create Your Offer:</strong><br>
+                        Step 7: Write detailed offer document:<br>
+                        • Problem you're solving<br>
+                        • Who it's for (and who it's NOT for)<br>
+                        • What's included (be specific)<br>
+                        • Expected outcomes/results<br>
+                        • Investment amount<br>
+                        • Application or payment process<br>
+                        Step 8: Create simple sales page (use Carrd or Notion)<br>
+                        Step 9: Set up payment processing (Stripe, PayPal)<br>
+                        Step 10: Prepare onboarding process for clients<br><br>
+                        
+                        <strong>Week 3 - Pre-Launch Content:</strong><br>
+                        Step 11: Create 5-7 posts addressing client pain points<br>
+                        Step 12: Share case studies or your own transformation story<br>
+                        Step 13: Post testimonials if you have any (or results you've achieved)<br>
+                        Step 14: Build anticipation: "Something exciting coming next week..."<br>
+                        Step 15: DM 10-20 people who might be interested to gauge interest<br><br>
+                        
+                        <strong>Week 4 - Launch Week:</strong><br>
+                        Step 16: Announce offer on all platforms simultaneously<br>
+                        Step 17: Share to email list with special early-bird pricing<br>
+                        Step 18: Post to stories 3-5 times daily<br>
+                        Step 19: Go live to explain offer and answer questions<br>
+                        Step 20: Share urgency: "Only taking 5 clients this month"<br>
+                        Step 21: Follow up via DM with engaged audience members<br>
+                        Step 22: Host Q&A session for interested people<br><br>
+                        
+                        <strong>Ongoing - Delivery & Refinement:</strong><br>
+                        Step 23: Deliver exceptional value to first clients<br>
+                        Step 24: Gather testimonials and results<br>
+                        Step 25: Refine offer based on feedback<br>
+                        Step 26: Gradually increase prices as you prove results<br>
+                        Step 27: Create case studies from successful clients<br><br>
+                        
+                        <em>⏱️ Timeline: 4 weeks to launch | Goal: 3-5 founding clients</em>
+                    </div>
+                </div>
+                
+                <div class="skill-category" style="background: #e8f5e9; border: 2px solid #4caf50;">
+                    <h3 style="color: #2e7d32;"><span class="skill-icon">💡</span>Monetization Mindset & Tips</h3>
+                    <ul class="skill-list">
+                        <li class="skill-item" style="background: white;"><strong>Start Before You're Ready:</strong> Don't wait for 10K followers - launch your first offer at 1K</li>
+                        <li class="skill-item" style="background: white;"><strong>Give Value First:</strong> 90% free content, 10% paid - build trust before asking for money</li>
+                        <li class="skill-item" style="background: white;"><strong>Multiple Streams:</strong> Don't rely on one income source - diversify (products + services + affiliates)</li>
+                        <li class="skill-item" style="background: white;"><strong>Test Pricing:</strong> Start lower, gather testimonials, gradually increase as demand grows</li>
+                        <li class="skill-item" style="background: white;"><strong>Solve Real Problems:</strong> People pay for transformations, not information</li>
+                        <li class="skill-item" style="background: white;"><strong>Ask for Feedback:</strong> Survey customers regularly - improve based on what they actually need</li>
+                        <li class="skill-item" style="background: white;"><strong>Consistency Wins:</strong> Promote your offers regularly without being pushy</li>
+                        <li class="skill-item" style="background: white;"><strong>Invest in Yourself:</strong> Reinvest 20% of earnings into learning and tools</li>
+                    </ul>
+                </div>
+                
+                <div class="tip-box">
+                    <strong>💰 Monetization Reality:</strong> Most creators take 12-18 months to earn their first $1K online. First $100 is hardest. First $1K proves concept. First $10K = you have a real business. Stay consistent, keep providing value, be patient.
+                </div>
+                
+                <button class="action-btn" onclick="alert('Ready to monetize? Pick ONE method above and commit to launching it in 30 days. Your audience wants to support you—let them! 💸')">Start Monetizing</button>
+            </div>
+            
+            <div id="beginner" class="section">
+                <h2 style="font-size: 16px; color: #2d3748; margin-bottom: 15px;">Beginner's Complete Guide</h2>
+                
+                <div class="skill-category" style="background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%); border: none;">
+                    <h3 style="color: #2d3748;"><span class="skill-icon">🔍</span>Brand Discovery Worksheet</h3>
+                    <div style="padding: 8px 1%; font-size: 13px;">
+                        <strong>Answer these questions:</strong><br><br>
+                        1. What are you genuinely passionate about?<br>
+                        2. What skills do people ask you for help with?<br>
+                        3. What problems can you solve for others?<br>
+                        4. What would you talk about for free?<br>
+                        5. What intersection of passion + skill + demand exists?<br><br>
+                        <em>Your niche = Passion + Expertise + Market Need</em>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">1</span>
+                        Platform Selection Guide
+                    </div>
+                    <div class="step-description">
+                        <strong>LinkedIn:</strong> Best for B2B, professionals, thought leadership, career growth<br>
+                        <strong>Instagram:</strong> Visual content, lifestyle, personal stories, behind-the-scenes<br>
+                        <strong>Twitter/X:</strong> Quick insights, threads, real-time engagement, networking<br>
+                        <strong>TikTok:</strong> Short videos, entertainment, education, younger audience<br>
+                        <strong>YouTube:</strong> Long-form content, tutorials, deep dives, authority building<br><br>
+                        <em>Start with 1-2 platforms where your audience hangs out!</em>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">2</span>
+                        Your First Post Templates
+                    </div>
+                    <div class="step-description">
+                        <strong>Introduction Post:</strong><br>
+                        "Hi, I'm [Name]! I help [audience] with [problem]. Here's my story: [brief background]. Follow along as I share [what you'll post about]."<br><br>
+                        
+                        <strong>Value Post:</strong><br>
+                        "3 lessons I learned about [topic]:<br>
+                        1. [Lesson + example]<br>
+                        2. [Lesson + example]<br>
+                        3. [Lesson + example]<br>
+                        What's been your biggest lesson?"<br><br>
+                        
+                        <strong>Story Post:</strong><br>
+                        "A year ago, I [situation]. Today, I [transformation]. Here's what changed..."
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">3</span>
+                        Bio Writing Formula
+                    </div>
+                    <div class="step-description">
+                        <strong>Perfect Bio Structure:</strong><br><br>
+                        [Who you are] | [What you do] | [Who you help]<br>
+                        [Your unique approach or result]<br>
+                        [Call-to-action or link]<br><br>
+                        
+                        <strong>Example:</strong><br>
+                        "Digital Marketing Strategist | Helping small businesses grow online<br>
+                        Turned $0 → $100K in 12 months | Sharing the playbook<br>
+                        📩 Free strategy guide ⬇️"
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">4</span>
+                        Profile Optimization Checklist
+                    </div>
+                    <div class="step-description">
+                        ✓ Professional, clear profile photo (face visible, good lighting)<br>
+                        ✓ Consistent username across platforms<br>
+                        ✓ Compelling bio that explains your value<br>
+                        ✓ Link to your main platform/website/offer<br>
+                        ✓ Cover/banner image that reinforces your brand<br>
+                        ✓ Featured/highlight content for new visitors<br>
+                        ✓ Contact information easily accessible<br>
+                        ✓ Brand colors consistent across platforms
+                    </div>
+                </div>
+                
+                <div class="skill-category" style="background: #ffe5e5; border: 2px solid #ff6b6b;">
+                    <h3 style="color: #c92a2a;"><span class="skill-icon">⚠️</span>7 Beginner Mistakes to Avoid</h3>
+                    <ul class="skill-list">
+                        <li class="skill-item" style="background: white;">Posting inconsistently (pick a schedule you can maintain)</li>
+                        <li class="skill-item" style="background: white;">Only talking about yourself (80% value, 20% promotion)</li>
+                        <li class="skill-item" style="background: white;">Ignoring engagement (respond to every comment early on)</li>
+                        <li class="skill-item" style="background: white;">Copying others exactly (be inspired, but stay authentic)</li>
+                        <li class="skill-item" style="background: white;">Expecting overnight success (it takes 6-12 months minimum)</li>
+                        <li class="skill-item" style="background: white;">Being on every platform (master 1-2 first)</li>
+                        <li class="skill-item" style="background: white;">Not tracking what works (use analytics from day 1)</li>
+                    </ul>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">5</span>
+                        Your First 7 Days Action Plan
+                    </div>
+                    <div class="step-description">
+                        <strong>Day 1:</strong> Complete brand discovery worksheet + choose your niche<br>
+                        <strong>Day 2:</strong> Select your primary platform + optimize profile<br>
+                        <strong>Day 3:</strong> Write your bio + create branded profile visuals<br>
+                        <strong>Day 4:</strong> Research 10 accounts in your niche (what works for them?)<br>
+                        <strong>Day 5:</strong> Create your introduction post + schedule it<br>
+                        <strong>Day 6:</strong> Plan your first week of content (3-5 posts)<br>
+                        <strong>Day 7:</strong> Post introduction + engage with 20 people in your niche
+                    </div>
+                </div>
+                
+                <div class="tip-box">
+                    <strong>🎯 Beginner's Mantra:</strong> "Done is better than perfect. Consistency beats perfection. Learn by doing, not overthinking."
+                </div>
+                
+                <button class="action-btn" onclick="alert('Amazing! Start with Day 1 of the action plan. Take it one step at a time. You got this! 🚀')">Start My Journey</button>
+            </div>
+            
+            <div id="advanced" class="section">
+                <h2 style="font-size: 16px; color: #2d3748; margin-bottom: 15px;">Advanced Growth Strategies</h2>
+                
+                <div class="skill-category" style="background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%); border: none; color: white;">
+                    <h3 style="color: white;"><span class="skill-icon">💰</span>Monetization Strategies</h3>
+                    <div style="padding: 8px 1%; font-size: 13px;">
+                        <strong>7 Revenue Streams to Build:</strong><br><br>
+                        1. <strong>Sponsored Content:</strong> Partner with brands (need 5K+ engaged followers)<br>
+                        2. <strong>Digital Products:</strong> Courses, ebooks, templates, guides ($27-$997)<br>
+                        3. <strong>Consulting/Coaching:</strong> 1-on-1 or group sessions ($100-$500/hr)<br>
+                        4. <strong>Affiliate Marketing:</strong> Promote tools you use (5-30% commission)<br>
+                        5. <strong>Membership/Community:</strong> Exclusive content ($10-$100/month)<br>
+                        6. <strong>Speaking Engagements:</strong> Events, podcasts, workshops ($500-$10K)<br>
+                        7. <strong>Brand Partnerships:</strong> Long-term ambassador deals ($1K-$50K+)
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">1</span>
+                        Personal Brand Audit Framework
+                    </div>
+                    <div class="step-description">
+                        <strong>Quarterly Self-Assessment:</strong><br><br>
+                        <strong>Content Analysis:</strong> Which posts got highest engagement? What topics resonated? What flopped?<br>
+                        <strong>Audience Growth:</strong> Rate of follower increase, quality of followers, demographics shift<br>
+                        <strong>Brand Perception:</strong> Survey audience, read DMs/comments, check sentiment<br>
+                        <strong>Competition Review:</strong> What are similar creators doing? Gaps you can fill?<br>
+                        <strong>Revenue Tracking:</strong> Income per platform, ROI on time invested<br>
+                        <strong>Energy Check:</strong> Which activities drain you? Which energize you?
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">2</span>
+                        Crisis Management & Reputation Protection
+                    </div>
+                    <div class="step-description">
+                        <strong>Before Crisis:</strong><br>
+                        • Google yourself monthly, set up alerts<br>
+                        • Screenshot positive feedback for social proof<br>
+                        • Build goodwill reservoir through genuine relationships<br>
+                        • Document your values and boundaries publicly<br><br>
+                        
+                        <strong>During Crisis:</strong><br>
+                        • Pause and breathe (don't react immediately)<br>
+                        • Assess: valid criticism or baseless attack?<br>
+                        • If valid: acknowledge, apologize, commit to change<br>
+                        • If baseless: brief clarification then move on<br>
+                        • Never argue in comments (take serious issues to DM)<br>
+                        • Your true supporters will defend you
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">3</span>
+                        Scaling Your Influence
+                    </div>
+                    <div class="step-description">
+                        <strong>Systems to Implement at 10K+ Followers:</strong><br><br>
+                        <strong>Content Systems:</strong> Batch create (1 day = 2 weeks content), repurpose across platforms, use templates<br>
+                        <strong>Automation:</strong> Scheduling tools (Buffer, Later), chatbots for FAQs, email sequences<br>
+                        <strong>Team Building:</strong> VA for engagement, editor for content, strategist for growth<br>
+                        <strong>Community Management:</strong> Moderators for groups, core fans as brand ambassadors<br>
+                        <strong>Product Ladder:</strong> Free → Low-ticket ($27) → Mid-ticket ($297) → High-ticket ($2K+)<br>
+                        <strong>Strategic Partnerships:</strong> Co-create with complementary brands
+                    </div>
+                </div>
+                
+                <div class="skill-category" style="background: #e3f2fd; border: 2px solid #2196f3;">
+                    <h3 style="color: #1565c0;"><span class="skill-icon">📊</span>Advanced Analytics & Growth Hacking</h3>
+                    <div style="padding: 8px 1%; font-size: 13px;">
+                        <strong>Metrics That Actually Matter:</strong><br><br>
+                        ❌ Vanity Metrics: Total followers, likes, views<br>
+                        ✅ Real Metrics: Engagement rate, save/share rate, DM inquiries, click-through rate, conversion rate, revenue per follower<br><br>
+                        
+                        <strong>Growth Hacking Tactics:</strong><br>
+                        • <strong>Collaboration Pods:</strong> 5-10 creators engage on each other's content within first hour<br>
+                        • <strong>Strategic Commenting:</strong> First/valuable comment on viral posts in your niche<br>
+                        • <strong>Content Sequencing:</strong> Post controversial take → follow-up solution → CTA to offer<br>
+                        • <strong>Algorithm Gaming:</strong> Post when 70%+ of audience is online, use all native features<br>
+                        • <strong>Paid Amplification:</strong> Boost top organic posts ($20-$100 to reach 10K-50K)
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">4</span>
+                        Building a Personal Brand Ecosystem
+                    </div>
+                    <div class="step-description">
+                        <strong>The Flywheel Model:</strong><br><br>
+                        <strong>Hub:</strong> Your owned platform (website, email list) - you control this<br>
+                        <strong>Spokes:</strong> Social platforms drive traffic to hub<br>
+                        <strong>Content Loop:</strong> Long-form content (blog/video) → broken into social snippets → drive back to long-form<br>
+                        <strong>Email Ecosystem:</strong> Capture emails, nurture weekly, convert to customers<br>
+                        <strong>Product Ecosystem:</strong> Entry product → ascension path → recurring revenue<br>
+                        <strong>Media Ecosystem:</strong> Podcast guest → repurpose clips → grow authority<br><br>
+                        
+                        <em>Goal: Build assets you own, not just rent attention on social platforms</em>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">5</span>
+                        Advanced Collaboration & Partnership Strategy
+                    </div>
+                    <div class="step-description">
+                        <strong>Strategic Partnership Framework:</strong><br><br>
+                        <strong>Tier 1 - Peer Collaborations:</strong> Similar size, complementary niches, cross-promote<br>
+                        <strong>Tier 2 - Aspirational Partnerships:</strong> Slightly bigger, offer value first, earn features<br>
+                        <strong>Tier 3 - Brand Deals:</strong> Professional pitch decks, media kits, clear deliverables<br><br>
+                        
+                        <strong>Collaboration Ideas:</strong><br>
+                        • Joint webinars or live sessions<br>
+                        • Co-created products or bundles<br>
+                        • Guest content swaps<br>
+                        • Challenge or campaign collaborations<br>
+                        • Affiliate partnerships with revenue share
+                    </div>
+                </div>
+                
+                <div class="skill-category" style="background: #fff3e0; border: 2px solid #ff9800;">
+                    <h3 style="color: #e65100;"><span class="skill-icon">⚡</span>Advanced Content Strategies</h3>
+                    <ul class="skill-list">
+                        <li class="skill-item" style="background: white;"><strong>Pillar + Cluster:</strong> One deep piece broken into 10+ micro-content pieces</li>
+                        <li class="skill-item" style="background: white;"><strong>Controversy Marketing:</strong> Take polarizing stands (carefully) to boost engagement</li>
+                        <li class="skill-item" style="background: white;"><strong>Behind-the-Scenes:</strong> Show revenue, failures, processes (builds trust)</li>
+                        <li class="skill-item" style="background: white;"><strong>Data Storytelling:</strong> Original research, surveys, case studies (media magnets)</li>
+                        <li class="skill-item" style="background: white;"><strong>Signature Framework:</strong> Create proprietary method/system (becomes your IP)</li>
+                        <li class="skill-item" style="background: white;"><strong>Strategic Vulnerability:</strong> Share struggles authentically to deepen connection</li>
+                    </ul>
+                </div>
+                
+                <div class="tip-box">
+                    <strong>🎯 Advanced Mindset:</strong> You're not just a content creator—you're building a media company, a movement, and a legacy. Think in years, not months. Build systems, not just content.
+                </div>
+                
+                <button class="action-btn" onclick="alert('Ready to level up! Pick ONE advanced strategy to implement this quarter. Master it before moving to the next. 🚀')">Choose My Focus Area</button>
+            </div>
+            
+            <div id="specialized" class="section">
+                <h2 style="font-size: 16px; color: #2d3748; margin-bottom: 15px;">Platform-Specific Strategies</h2>
+                
+                <div class="skill-category" style="background: linear-gradient(135deg, #0077b5 0%, #00a0dc 100%); border: none; color: white;">
+                    <h3 style="color: white;"><span class="skill-icon">💼</span>LinkedIn Mastery Strategy</h3>
+                    <div style="padding: 8px 1%; font-size: 13px;">
+                        <strong>Best Posting Times:</strong> Tue-Thu, 7-9am or 5-6pm<br><br>
+                        
+                        <strong>Content That Works:</strong><br>
+                        • Personal stories with business lessons (1000-1300 characters)<br>
+                        • Carousel posts (PDF with 5-10 slides)<br>
+                        • Polls asking for opinions on industry topics<br>
+                        • Document posts (mini-guides as native uploads)<br>
+                        • Video with captions (2-5 minutes max)<br><br>
+                        
+                        <strong>LinkedIn Algorithm Hacks:</strong><br>
+                        • Post goes to 1% of network first (engage early to boost)<br>
+                        • Comment quality > quantity (thoughtful replies win)<br>
+                        • Connection requests: personalize with context<br>
+                        • Use 3-5 hashtags max (1 niche, 2-4 broad)<br>
+                        • Tag people sparingly (only if truly relevant)<br>
+                        • Engagement in first 60 min = critical
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">📸</span>
+                        Instagram Growth Blueprint
+                    </div>
+                    <div class="step-description">
+                        <strong>Content Mix Formula (Rule of 3s):</strong><br>
+                        • 3 educational posts (teach something)<br>
+                        • 3 entertaining posts (memes, relatable content)<br>
+                        • 3 inspirational posts (motivational, stories)<br>
+                        • 1 promotional post (your offer/product)<br><br>
+                        
+                        <strong>Reels Strategy:</strong><br>
+                        Hook in first 1 second | Keep under 30 seconds | Use trending audio | Add captions | End with CTA<br><br>
+                        
+                        <strong>Story Tactics:</strong><br>
+                        • Post 5-7 stories daily (stay top of feed)<br>
+                        • Use polls, questions, quizzes (boost engagement)<br>
+                        • Behind-the-scenes content (build intimacy)<br>
+                        • Story highlights = evergreen value<br><br>
+                        
+                        <strong>Hashtag Strategy:</strong><br>
+                        • 3-5 small hashtags (10K-100K posts)<br>
+                        • 3-5 medium hashtags (100K-500K posts)<br>
+                        • 2-3 large hashtags (500K+ posts)<br>
+                        • Research competitors' top-performing hashtags
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">𝕏</span>
+                        Twitter/X Engagement Formula
+                    </div>
+                    <div class="step-description">
+                        <strong>Viral Tweet Framework:</strong><br>
+                        • Strong hook (pattern interrupt in first 5 words)<br>
+                        • Clear formatting (line breaks, bullets, emojis)<br>
+                        • One main idea per tweet<br>
+                        • End with question or CTA<br><br>
+                        
+                        <strong>Thread Strategy:</strong><br>
+                        1. Attention-grabbing opener<br>
+                        2. Promise specific value (3 ways, 5 lessons, etc.)<br>
+                        3. Deliver with examples/stories<br>
+                        4. Summary + CTA in final tweet<br>
+                        5. Pin best threads to profile<br><br>
+                        
+                        <strong>Growth Tactics:</strong><br>
+                        • Post 3-5 times daily (consistency is key)<br>
+                        • Reply to 20+ tweets daily (build relationships)<br>
+                        • Quote tweet with your take (add value)<br>
+                        • Join Twitter Spaces in your niche<br>
+                        • Engage within first 15 min of posting
+                    </div>
+                </div>
+                
+                <div class="skill-category" style="background: #ffe5f0; border: 2px solid #ff006e;">
+                    <h3 style="color: #c9184a;"><span class="skill-icon">🎵</span>TikTok Viral Strategy</h3>
+                    <div style="padding: 8px 1%; font-size: 13px;">
+                        <strong>Algorithm Optimization:</strong><br>
+                        • Watch time is #1 metric (hook them in 1 sec)<br>
+                        • Complete video views = huge boost<br>
+                        • Shares > Likes > Comments > Views<br>
+                        • Post 1-3 times daily for consistency<br><br>
+                        
+                        <strong>Content Formula:</strong><br>
+                        1. <strong>Pattern interrupt</strong> (unexpected start)<br>
+                        2. <strong>Value delivery</strong> (teach or entertain)<br>
+                        3. <strong>Loop</strong> (make them watch again)<br>
+                        4. <strong>CTA</strong> (follow for more)<br><br>
+                        
+                        <strong>Trending Audio Strategy:</strong><br>
+                        • Use sounds with 100K-1M uses (not oversaturated)<br>
+                        • Put your unique spin on trends<br>
+                        • Jump on trends within 24-48 hours<br>
+                        • Save successful audios for later use
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">▶️</span>
+                        YouTube Authority Building
+                    </div>
+                    <div class="step-description">
+                        <strong>Video Structure:</strong><br>
+                        • Hook (0-15 sec): tease transformation/result<br>
+                        • Intro (15-30 sec): who you are, what they'll learn<br>
+                        • Content (main): deliver on promise with examples<br>
+                        • CTA (end): subscribe, comment, watch next<br><br>
+                        
+                        <strong>SEO Optimization:</strong><br>
+                        • Keyword in title, description, tags<br>
+                        • Custom thumbnail with text + face<br>
+                        • Timestamps in description<br>
+                        • First 48 hours critical (promote heavily)<br>
+                        • Playlist strategy for binge-watching<br><br>
+                        
+                        <strong>Content Pillars:</strong><br>
+                        • Tutorials/How-tos (evergreen traffic)<br>
+                        • Vlogs/Behind-the-scenes (build connection)<br>
+                        • Commentary/Reactions (trending topics)<br>
+                        • Q&A/Community content (engagement)
+                    </div>
+                </div>
+                
+                <div class="skill-category" style="background: #e8f5e9; border: 2px solid #4caf50;">
+                    <h3 style="color: #2e7d32;"><span class="skill-icon">📧</span>Email List Building Strategy</h3>
+                    <div style="padding: 8px 1%; font-size: 13px;">
+                        <strong>Lead Magnet Ideas:</strong><br>
+                        • Checklists, templates, swipe files<br>
+                        • Mini-courses (5-7 day email sequence)<br>
+                        • Exclusive guides or ebooks<br>
+                        • Resource libraries, tool lists<br>
+                        • Challenges or workbooks<br><br>
+                        
+                        <strong>Email Sequence Framework:</strong><br>
+                        Day 1: Deliver lead magnet + introduce yourself<br>
+                        Day 2: Quick win or actionable tip<br>
+                        Day 3: Personal story + lesson<br>
+                        Day 4: Social proof (testimonials, results)<br>
+                        Day 5: Soft pitch (relevant offer)<br>
+                        Day 6: FAQ or objection handling<br>
+                        Day 7: Final CTA with urgency/bonus<br><br>
+                        
+                        <strong>Weekly Newsletter Formula:</strong><br>
+                        • Personal note (what's happening in your life)<br>
+                        • Main lesson or insight<br>
+                        • Curated resources or recommendations<br>
+                        • Call-to-action or next step
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">🤝</span>
+                        Collaboration & Partnership Playbook
+                    </div>
+                    <div class="step-description">
+                        <strong>Outreach Template:</strong><br>
+                        "Hi [Name], I've been following your work on [specific thing] and love how you [compliment]. I'm [your intro] and noticed our audiences overlap. Would you be open to [specific collaboration idea]? I'm thinking we could [value proposition]. Let me know if this interests you!"<br><br>
+                        
+                        <strong>Collaboration Types:</strong><br>
+                        • Guest posts/content swaps<br>
+                        • Joint Instagram Lives or Twitter Spaces<br>
+                        • Co-hosted webinars or workshops<br>
+                        • Product bundles or affiliate partnerships<br>
+                        • Podcast interviews (be guest + host them)<br>
+                        • Challenges or giveaways together<br><br>
+                        
+                        <strong>Win-Win Framework:</strong><br>
+                        Always answer: "What's in it for them?" before reaching out. Make it easy to say yes with clear proposal, no extra work required.
+                    </div>
+                </div>
+                
+                <div class="tip-box">
+                    <strong>🎯 Platform Strategy:</strong> Master ONE platform first (6-12 months), then repurpose that content to 1-2 additional platforms. Don't spread yourself too thin!
+                </div>
+                
+                <button class="action-btn" onclick="alert('Choose your primary platform and implement these strategies for 30 days. Track what works! 📊')">Start Platform Strategy</button>
+            </div>
+            
+            <div id="tools" class="section">
+                <h2 style="font-size: 16px; color: #2d3748; margin-bottom: 15px;">Essential Tools & Resources</h2>
+                
+                <div class="skill-category" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%); border: none; color: white;">
+                    <h3 style="color: white;"><span class="skill-icon">🎨</span>Content Creation Tools</h3>
+                    <div style="padding: 8px 1%; font-size: 13px;">
+                        <strong>Design & Graphics:</strong><br>
+                        • <strong>Canva</strong> (Free/Pro) - Templates, graphics, video editing<br>
+                        • <strong>Figma</strong> (Free) - Professional design, collaboration<br>
+                        • <strong>Adobe Express</strong> (Free/Paid) - Quick social media graphics<br>
+                        • <strong>Photopea</strong> (Free) - Browser-based Photoshop alternative<br><br>
+                        
+                        <strong>Video Creation:</strong><br>
+                        • <strong>CapCut</strong> (Free) - TikTok/Reels editing<br>
+                        • <strong>DaVinci Resolve</strong> (Free) - Professional video editing<br>
+                        • <strong>Descript</strong> (Paid) - Video editing via transcript<br>
+                        • <strong>Runway ML</strong> (Paid) - AI video generation<br><br>
+                        
+                        <strong>AI Content Assistants:</strong><br>
+                        • <strong>ChatGPT/Claude</strong> - Idea generation, writing, brainstorming<br>
+                        • <strong>Midjourney/DALL-E</strong> - AI image generation<br>
+                        • <strong>Copy.ai</strong> - Marketing copy, captions<br>
+                        • <strong>Jasper</strong> - Long-form content creation
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">📅</span>
+                        Scheduling & Management Tools
+                    </div>
+                    <div class="step-description">
+                        <strong>Social Media Schedulers:</strong><br>
+                        • <strong>Buffer</strong> (Free/Paid) - Multi-platform scheduling, clean interface<br>
+                        • <strong>Later</strong> (Free/Paid) - Visual Instagram planner, analytics<br>
+                        • <strong>Hootsuite</strong> (Paid) - Enterprise-level management<br>
+                        • <strong>Meta Business Suite</strong> (Free) - Facebook + Instagram native<br><br>
+                        
+                        <strong>Content Planning:</strong><br>
+                        • <strong>Notion</strong> (Free/Paid) - Content calendar, databases, wiki<br>
+                        • <strong>Trello</strong> (Free/Paid) - Visual board planning<br>
+                        • <strong>Airtable</strong> (Free/Paid) - Spreadsheet-database hybrid<br>
+                        • <strong>Google Sheets</strong> (Free) - Simple, collaborative planning
+                    </div>
+                </div>
+                
+                <div class="skill-category" style="background: #f0f4ff; border: 2px solid #6366f1;">
+                    <h3 style="color: #4338ca;"><span class="skill-icon">📊</span>Analytics & Tracking Tools</h3>
+                    <div style="padding: 8px 1%; font-size: 13px;">
+                        <strong>Social Media Analytics:</strong><br>
+                        • <strong>Native platform analytics</strong> (Free) - Instagram Insights, LinkedIn Analytics, etc.<br>
+                        • <strong>Metricool</strong> (Free/Paid) - Cross-platform analytics dashboard<br>
+                        • <strong>Sprout Social</strong> (Paid) - Advanced social listening<br>
+                        • <strong>Social Blade</strong> (Free) - Track growth trends<br><br>
+                        
+                        <strong>Website & Traffic:</strong><br>
+                        • <strong>Google Analytics</strong> (Free) - Website traffic, user behavior<br>
+                        • <strong>Plausible/Fathom</strong> (Paid) - Privacy-focused analytics<br>
+                        • <strong>Bitly</strong> (Free/Paid) - Link tracking and shortening<br>
+                        • <strong>Hotjar</strong> (Free/Paid) - Heatmaps, user recordings
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">💌</span>
+                        Email Marketing Platforms
+                    </div>
+                    <div class="step-description">
+                        <strong>Email Service Providers:</strong><br>
+                        • <strong>ConvertKit</strong> (Free up to 1K) - Creator-focused, automation<br>
+                        • <strong>Mailchimp</strong> (Free up to 500) - Beginner-friendly, templates<br>
+                        • <strong>Beehiiv</strong> (Free/Paid) - Modern newsletter platform<br>
+                        • <strong>Substack</strong> (Free) - Built-in audience, monetization<br><br>
+                        
+                        <strong>Landing Page Builders:</strong><br>
+                        • <strong>Carrd</strong> (Free/Paid) - Simple, fast one-page sites<br>
+                        • <strong>Linktree/Beacons</strong> (Free/Paid) - Bio link tools<br>
+                        • <strong>Leadpages</strong> (Paid) - Conversion-optimized templates<br>
+                        • <strong>Unbounce</strong> (Paid) - A/B testing, optimization
+                    </div>
+                </div>
+                
+                <div class="skill-category" style="background: #fff9e6; border: 2px solid #f59e0b;">
+                    <h3 style="color: #b45309;"><span class="skill-icon">🔍</span>Research & Ideation Tools</h3>
+                    <div style="padding: 8px 1%; font-size: 13px;">
+                        <strong>Keyword & SEO Research:</strong><br>
+                        • <strong>Google Trends</strong> (Free) - Trending topics, search interest<br>
+                        • <strong>AnswerThePublic</strong> (Free/Paid) - Question-based keywords<br>
+                        • <strong>Ubersuggest</strong> (Free/Paid) - SEO, keyword research<br>
+                        • <strong>Ahrefs/SEMrush</strong> (Paid) - Professional SEO suite<br><br>
+                        
+                        <strong>Content Inspiration:</strong><br>
+                        • <strong>BuzzSumo</strong> (Paid) - Find trending content in niche<br>
+                        • <strong>Feedly</strong> (Free/Paid) - RSS feed aggregator<br>
+                        • <strong>Reddit/Quora</strong> (Free) - Real questions from audience<br>
+                        • <strong>SparkToro</strong> (Free/Paid) - Audience intelligence
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">💰</span>
+                        Monetization & Business Tools
+                    </div>
+                    <div class="step-description">
+                        <strong>Course & Digital Products:</strong><br>
+                        • <strong>Gumroad</strong> (Free + fees) - Sell digital products easily<br>
+                        • <strong>Teachable</strong> (Paid) - Online course platform<br>
+                        • <strong>Podia</strong> (Paid) - Courses, memberships, digital downloads<br>
+                        • <strong>Kajabi</strong> (Paid) - All-in-one business platform<br><br>
+                        
+                        <strong>Payment & Invoicing:</strong><br>
+                        • <strong>Stripe</strong> (Free + fees) - Payment processing<br>
+                        • <strong>PayPal</strong> (Free + fees) - Global payments<br>
+                        • <strong>Wave</strong> (Free) - Invoicing, accounting<br>
+                        • <strong>QuickBooks</strong> (Paid) - Professional accounting<br><br>
+                        
+                        <strong>Affiliate & Sponsorships:</strong><br>
+                        • <strong>Amazon Associates</strong> - Product affiliates<br>
+                        • <strong>ShareASale/Impact</strong> - Affiliate networks<br>
+                        • <strong>AspireIQ/Fohr</strong> - Brand partnership platforms<br>
+                        • <strong>Patreon/Buy Me a Coffee</strong> - Fan support
+                    </div>
+                </div>
+                
+                <div class="skill-category" style="background: #f0fdf4; border: 2px solid #22c55e;">
+                    <h3 style="color: #15803d;"><span class="skill-icon">📚</span>Learning Resources</h3>
+                    <div style="padding: 8px 1%; font-size: 13px;">
+                        <strong>Free Learning Platforms:</strong><br>
+                        • <strong>YouTube</strong> - Thousands of free tutorials on every topic<br>
+                        • <strong>HubSpot Academy</strong> - Free marketing certifications<br>
+                        • <strong>Google Digital Garage</strong> - Digital marketing basics<br>
+                        • <strong>Coursera</strong> - Audit courses for free<br><br>
+                        
+                        <strong>Paid Courses & Communities:</strong><br>
+                        • <strong>Skillshare</strong> - Creative skills, design, business<br>
+                        • <strong>Udemy</strong> - Affordable one-time purchase courses<br>
+                        • <strong>MasterClass</strong> - Learn from experts/celebrities<br>
+                        • <strong>Circle/Skool</strong> - Community platforms with courses<br><br>
+                        
+                        <strong>Books to Read:</strong><br>
+                        • "Building a StoryBrand" by Donald Miller<br>
+                        • "Atomic Habits" by James Clear<br>
+                        • "Show Your Work" by Austin Kleon<br>
+                        • "The 1-Page Marketing Plan" by Allan Dib<br>
+                        • "Crushing It!" by Gary Vaynerchuk
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">⚡</span>
+                        Productivity & Workflow Tools
+                    </div>
+                    <div class="step-description">
+                        <strong>Time Management:</strong><br>
+                        • <strong>Pomodoro Timer</strong> (Free apps) - Focused work sessions<br>
+                        • <strong>RescueTime</strong> (Free/Paid) - Track where time goes<br>
+                        • <strong>Clockify</strong> (Free) - Time tracking for projects<br>
+                        • <strong>Focus@Will</strong> (Paid) - Productivity music<br><br>
+                        
+                        <strong>Automation:</strong><br>
+                        • <strong>Zapier</strong> (Free/Paid) - Connect apps, automate workflows<br>
+                        • <strong>Make (Integromat)</strong> (Free/Paid) - Visual automation<br>
+                        • <strong>IFTTT</strong> (Free/Paid) - Simple automation recipes<br><br>
+                        
+                        <strong>Note-Taking & Ideas:</strong><br>
+                        • <strong>Notion</strong> (Free/Paid) - All-in-one workspace<br>
+                        • <strong>Obsidian</strong> (Free) - Knowledge management, linking notes<br>
+                        • <strong>Apple Notes/Google Keep</strong> (Free) - Quick capture<br>
+                        • <strong>Voice memos</strong> - Capture ideas on the go
+                    </div>
+                </div>
+                
+                <div class="tip-box">
+                    <strong>💡 Tool Strategy:</strong> Start with free tools and upgrade only when you hit their limits. Don't let tools become an excuse for not taking action. The best tool is the one you'll actually use consistently!
+                </div>
+                
+                <button class="action-btn" onclick="alert('Pick 3-5 essential tools for your current stage. Master them before adding more to your stack! 🚀')">Build My Tool Stack</button>
+            </div>
+            
+            <div id="reference" class="section">
+                <h2 style="font-size: 16px; color: #2d3748; margin-bottom: 15px;">Quick Reference Cheat Sheets</h2>
+                
+                <div class="skill-category" style="background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%); border: none;">
+                    <h3 style="color: #2d3748;"><span class="skill-icon">📝</span>Content Types Cheat Sheet</h3>
+                    <div style="padding: 8px 1%; font-size: 13px;">
+                        <strong>Educational:</strong> How-tos, tutorials, tips, explanations, case studies<br>
+                        <strong>Inspirational:</strong> Quotes, success stories, motivational posts, transformations<br>
+                        <strong>Entertaining:</strong> Memes, humor, relatable content, trending topics<br>
+                        <strong>Personal:</strong> Behind-the-scenes, daily life, struggles, wins, journey<br>
+                        <strong>Promotional:</strong> Product launches, offers, testimonials, CTAs<br>
+                        <strong>Engagement:</strong> Polls, questions, fill-in-the-blank, this or that<br>
+                        <strong>User-Generated:</strong> Reposts, testimonials, community highlights<br>
+                        <strong>Curated:</strong> Industry news, resource roundups, tool recommendations<br><br>
+                        
+                        <em>Mix ratio: 60% Educational, 20% Personal, 10% Entertaining, 10% Promotional</em>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">⏰</span>
+                        Best Posting Times by Platform
+                    </div>
+                    <div class="step-description">
+                        <strong>LinkedIn:</strong> Tue-Thu, 7-9am or 12-1pm or 5-6pm EST<br>
+                        <strong>Instagram:</strong> Mon-Fri, 11am-1pm or 7-9pm EST<br>
+                        <strong>Twitter/X:</strong> Mon-Fri, 8-10am or 6-9pm EST<br>
+                        <strong>TikTok:</strong> Tue-Thu, 9am, 12pm, or 7pm EST<br>
+                        <strong>Facebook:</strong> Wed-Fri, 9am-3pm EST<br>
+                        <strong>YouTube:</strong> Thu-Sat, 2-4pm EST<br>
+                        <strong>Pinterest:</strong> Sat-Sun, 8-11pm EST<br><br>
+                        
+                        <em>Note: Test these for YOUR audience—check analytics to find your optimal times!</em>
+                    </div>
+                </div>
+                
+                <div class="skill-category" style="background: #e3f2fd; border: 2px solid #2196f3;">
+                    <h3 style="color: #1565c0;"><span class="skill-icon">🎯</span>Call-to-Action (CTA) Examples</h3>
+                    <div style="padding: 8px 1%; font-size: 13px;">
+                        <strong>Engagement CTAs:</strong><br>
+                        • "Drop a 🔥 if you agree"<br>
+                        • "Tag someone who needs to see this"<br>
+                        • "What's your take? Let me know below"<br>
+                        • "Save this for later + follow for more"<br>
+                        • "Which option would you choose? A or B?"<br><br>
+                        
+                        <strong>Growth CTAs:</strong><br>
+                        • "Follow me for daily tips on [topic]"<br>
+                        • "Hit that follow button if you found this valuable"<br>
+                        • "Join 10K+ people learning [topic]"<br><br>
+                        
+                        <strong>Conversion CTAs:</strong><br>
+                        • "Link in bio for the free guide"<br>
+                        • "DM me 'READY' to get started"<br>
+                        • "Comment 'YES' and I'll send you the resource"<br>
+                        • "Click the link to claim your spot"
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">#️⃣</span>
+                        Hashtag Strategy Quick Guide
+                    </div>
+                    <div class="step-description">
+                        <strong>The 3-Tier System:</strong><br>
+                        • <strong>Niche Tags</strong> (10K-100K): Your specific topic, higher engagement<br>
+                        • <strong>Medium Tags</strong> (100K-500K): Broader reach, still relevant<br>
+                        • <strong>Popular Tags</strong> (500K+): Maximum reach, lower engagement<br><br>
+                        
+                        <strong>Optimal Numbers:</strong><br>
+                        Instagram: 8-15 hashtags (mix of all tiers)<br>
+                        Twitter: 1-2 hashtags max<br>
+                        LinkedIn: 3-5 hashtags<br>
+                        TikTok: 3-5 hashtags + trending sounds<br><br>
+                        
+                        <strong>Research Tips:</strong><br>
+                        • Check competitors' top-performing posts<br>
+                        • Use platform search to see hashtag volume<br>
+                        • Create branded hashtag for your community<br>
+                        • Update hashtag sets monthly based on performance
+                    </div>
+                </div>
+                
+                <div class="skill-category" style="background: #fff3e0; border: 2px solid #ff9800;">
+                    <h3 style="color: #e65100;"><span class="skill-icon">💬</span>Engagement Response Templates</h3>
+                    <div style="padding: 8px 1%; font-size: 13px;">
+                        <strong>Positive Comments:</strong><br>
+                        • "Thank you so much! Glad this resonated with you 💙"<br>
+                        • "Yes! That's exactly it. Appreciate you sharing"<br>
+                        • "Love this perspective! Thanks for adding to the conversation"<br><br>
+                        
+                        <strong>Questions:</strong><br>
+                        • "Great question! Here's what I've found..."<br>
+                        • "I'd recommend [specific answer]. Let me know if you need more details!"<br>
+                        • "I'll actually be covering this in my next post. Stay tuned!"<br><br>
+                        
+                        <strong>Negative/Criticism:</strong><br>
+                        • "Thanks for sharing your perspective. I see where you're coming from..."<br>
+                        • "I appreciate the feedback. Can you tell me more about..."<br>
+                        • "Valid point! I should have clarified..." (if they're right)<br><br>
+                        
+                        <em>Always respond within the first hour of posting for algorithm boost!</em>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">🔥</span>
+                        Hook Formulas (First Line)
+                    </div>
+                    <div class="step-description">
+                        <strong>Pattern Interrupt Hooks:</strong><br>
+                        • "I lost $50K so you don't have to. Here's what I learned..."<br>
+                        • "Stop doing [common thing]. Here's what to do instead..."<br>
+                        • "Everyone is wrong about [topic]. Here's why..."<br>
+                        • "The brutal truth about [topic] that no one talks about..."<br><br>
+                        
+                        <strong>Curiosity Hooks:</strong><br>
+                        • "This one change made me [result] in [timeframe]..."<br>
+                        • "Here's the [number] [topic] that changed everything..."<br>
+                        • "I wish someone told me this when I started..."<br>
+                        • "The secret to [desired outcome] that took me years to figure out..."<br><br>
+                        
+                        <strong>Relatable Hooks:</strong><br>
+                        • "If you're struggling with [problem], this is for you..."<br>
+                        • "Anyone else [relatable situation]? Here's what helped me..."<br>
+                        • "I used to [struggle]. Now I [success]. What changed..."<br>
+                        • "Unpopular opinion: [controversial take]..."
+                    </div>
+                </div>
+                
+                <div class="skill-category" style="background: #fce4ec; border: 2px solid #e91e63;">
+                    <h3 style="color: #880e4f;"><span class="skill-icon">📊</span>KPIs to Track Weekly</h3>
+                    <div style="padding: 8px 1%; font-size: 13px;">
+                        <strong>Engagement Metrics:</strong><br>
+                        • Engagement rate: (likes + comments + shares) / followers x 100<br>
+                        • Average comments per post<br>
+                        • Save/share ratio (most important!)<br>
+                        • Story views and completion rate<br><br>
+                        
+                        <strong>Growth Metrics:</strong><br>
+                        • Net new followers (gained - lost)<br>
+                        • Follower growth rate: new followers / total x 100<br>
+                        • Profile visits<br>
+                        • Link clicks to external sites<br><br>
+                        
+                        <strong>Content Performance:</strong><br>
+                        • Top 3 performing posts (what made them work?)<br>
+                        • Bottom 3 posts (what went wrong?)<br>
+                        • Content type breakdown (video vs image vs carousel)<br>
+                        • Best performing times/days<br><br>
+                        
+                        <strong>Business Metrics:</strong><br>
+                        • Email list growth<br>
+                        • DM inquiries for services<br>
+                        • Product/affiliate sales<br>
+                        • Revenue per follower
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">
+                        <span class="step-number">✍️</span>
+                        Content Format Templates
+                    </div>
+                    <div class="step-description">
+                        <strong>List Post:</strong><br>
+                        "[Number] ways to [desired outcome]:<br>
+                        1. [Tip + brief explanation]<br>
+                        2. [Tip + brief explanation]<br>
+                        ...<br>
+                        Which one will you try first?"<br><br>
+                        
+                        <strong>Story Post:</strong><br>
+                        "A year ago: [struggling situation]<br>
+                        Today: [successful outcome]<br>
+                        What changed: [the lesson/system]<br>
+                        You can do this too. Here's how..."<br><br>
+                        
+                        <strong>Mistake Post:</strong><br>
+                        "I made every beginner mistake with [topic].<br>
+                        Here's what I'd do differently:<br>
+                        ❌ Don't [mistake]<br>
+                        ✅ Instead [solution]<br>
+                        (Repeat 3-5 times)<br>
+                        Learn from my pain 😅"<br><br>
+                        
+                        <strong>Contrast Post:</strong><br>
+                        "Everyone tells you: [common advice]<br>
+                        Reality: [why it doesn't work]<br>
+                        What actually works: [your solution]<br>
+                        Here's the breakdown..."
+                    </div>
+                </div>
+                
+                <div class="skill-category" style="background: #f3e5f5; border: 2px solid #9c27b0;">
+                    <h3 style="color: #6a1b9a;"><span class="skill-icon">🚀</span>Daily Habits of Successful Creators</h3>
+                    <ul class="skill-list">
+                        <li class="skill-item" style="background: white;"><strong>Morning:</strong> Consume content in your niche for inspiration (15 min)</li>
+                        <li class="skill-item" style="background: white;"><strong>Create:</strong> Write, film, or design content (30-60 min focused time)</li>
+                        <li class="skill-item" style="background: white;"><strong>Engage:</strong> Comment on 10-20 posts in your niche authentically</li>
+                        <li class="skill-item" style="background: white;"><strong>Post:</strong> Share 1-2 pieces of content at optimal times</li>
+                        <li class="skill-item" style="background: white;"><strong>Respond:</strong> Reply to all comments within first hour of posting</li>
+                        <li class="skill-item" style="background: white;"><strong>DMs:</strong> Check and respond to direct messages daily</li>
+                        <li class="skill-item" style="background: white;"><strong>Learn:</strong> Study one high-performing post or take one lesson (15 min)</li>
+                        <li class="skill-item" style="background: white;"><strong>Evening:</strong> Review analytics and plan tomorrow's content</li>
+                    </ul>
+                </div>
+                
+                <div class="tip-box">
+                    <strong>💡 Pro Tip:</strong> Screenshot or save this reference guide! Use it when you're stuck, planning content, or need quick inspiration. Consistency beats creativity every time.
+                </div>
+                
+                <button class="action-btn" onclick="alert('Bookmark this page! Use these references whenever you need a quick reminder or inspiration. 📌')">Save This Reference</button>
+            </div>
+            
+            <div id="glossary" class="section">
+                <h2 style="font-size: 16px; color: #2d3748; margin-bottom: 15px;">Terminologies & Glossary</h2>
+                
+                <div style="background: #f8f9fa; padding: 10px 1%; border-radius: 8px; margin-bottom: 12px;">
+                    <strong style="font-size: 13px; color: #667eea;">📚 Browse by Category:</strong>
+                    <button onclick="document.getElementById('social-terms').scrollIntoView({behavior: 'smooth'})" style="margin: 5px; padding: 5px 10px; font-size: 12px; border: 1px solid #667eea; background: white; border-radius: 5px; cursor: pointer;">Social Media</button>
+                    <button onclick="document.getElementById('marketing-terms').scrollIntoView({behavior: 'smooth'})" style="margin: 5px; padding: 5px 10px; font-size: 12px; border: 1px solid #667eea; background: white; border-radius: 5px; cursor: pointer;">Marketing</button>
+                    <button onclick="document.getElementById('content-terms').scrollIntoView({behavior: 'smooth'})" style="margin: 5px; padding: 5px 10px; font-size: 12px; border: 1px solid #667eea; background: white; border-radius: 5px; cursor: pointer;">Content</button>
+                    <button onclick="document.getElementById('business-terms').scrollIntoView({behavior: 'smooth'})" style="margin: 5px; padding: 5px 10px; font-size: 12px; border: 1px solid #667eea; background: white; border-radius: 5px; cursor: pointer;">Business</button>
+                </div>
+                
+                <h3 id="social-terms" style="font-size: 15px; color: #667eea; margin: 20px 0 10px 0;">Social Media Terms</h3>
+                
+                <div class="step-card">
+                    <div class="step-title">Algorithm</div>
+                    <div class="step-description">
+                        The set of rules and calculations platforms use to determine what content to show users and in what order. Each platform has its own algorithm that considers factors like engagement, recency, and relevance.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">Engagement Rate</div>
+                    <div class="step-description">
+                        The percentage of your audience that interacts with your content. Formula: (Likes + Comments + Shares + Saves) ÷ Followers × 100. A good engagement rate is 3-6% for most platforms.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">Reach vs Impressions</div>
+                    <div class="step-description">
+                        <strong>Reach:</strong> Number of unique accounts that saw your content.<br>
+                        <strong>Impressions:</strong> Total number of times your content was displayed (one person can create multiple impressions).
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">CTR (Click-Through Rate)</div>
+                    <div class="step-description">
+                        Percentage of people who clicked on a link after seeing your post. Formula: Clicks ÷ Impressions × 100. Good CTR varies by platform but generally 1-3% is decent.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">Viral</div>
+                    <div class="step-description">
+                        Content that spreads rapidly through shares and engagement, reaching far beyond your normal audience. Typically defined as content reaching 10x+ your normal reach.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">Shadow Ban</div>
+                    <div class="step-description">
+                        When a platform limits your content's visibility without notifying you. Your posts appear normal to you but are hidden from most of your audience. Usually caused by violating community guidelines or suspicious activity.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">Bot / Fake Followers</div>
+                    <div class="step-description">
+                        Automated or fake accounts that follow you but don't engage. They inflate follower counts but hurt engagement rate. Avoid buying followers - platforms can detect and penalize this.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">Handle / Username</div>
+                    <div class="step-description">
+                        Your unique identifier on a platform (e.g., @yourname). Should be consistent across platforms for easy discovery and brand recognition.
+                    </div>
+                </div>
+                
+                <h3 id="marketing-terms" style="font-size: 15px; color: #667eea; margin: 30px 0 10px 0;">Marketing Terms</h3>
+                
+                <div class="skill-category" style="background: #e3f2fd; border: 2px solid #2196f3;">
+                    <h3 style="color: #1565c0;"><span class="skill-icon">🎯</span>Core Marketing Concepts</h3>
+                    <div style="padding: 8px 1%; font-size: 13px; line-height: 1.8;">
+                        <strong>Funnel:</strong> The journey people take from discovering you to becoming customers. Stages: Awareness → Interest → Decision → Action.<br><br>
+                        
+                        <strong>Lead Magnet:</strong> Free valuable resource (guide, checklist, template) offered in exchange for email address. Used to build email list.<br><br>
+                        
+                        <strong>Conversion:</strong> When someone takes desired action - subscribe, purchase, book call, etc. Conversion rate = percentage who complete action.<br><br>
+                        
+                        <strong>SEO (Search Engine Optimization):</strong> Optimizing content to rank higher in search results. Involves keywords, quality content, backlinks, and technical factors.<br><br>
+                        
+                        <strong>Analytics:</strong> Data about your content performance - views, engagement, demographics, etc. Used to make informed decisions.<br><br>
+                        
+                        <strong>KPI (Key Performance Indicator):</strong> Metrics that matter most for your goals. Examples: engagement rate, email list growth, revenue per follower.<br><br>
+                        
+                        <strong>ROI (Return on Investment):</strong> Profit gained relative to money/time invested. Formula: (Gain - Cost) ÷ Cost × 100<br><br>
+                        
+                        <strong>Niche:</strong> Specific segment of market you serve. Intersection of your expertise, passion, and audience need. Being specific helps you stand out.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">Target Audience</div>
+                    <div class="step-description">
+                        Specific group of people most likely to benefit from and purchase your products/services. Defined by demographics (age, location), psychographics (values, interests), and behaviors.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">Value Proposition</div>
+                    <div class="step-description">
+                        Clear statement of the unique value you provide and why someone should follow/buy from you instead of competitors. Answers: "What problem do you solve and why are you the best choice?"
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">USP (Unique Selling Proposition)</div>
+                    <div class="step-description">
+                        What makes you different from everyone else in your space. Your unique combination of expertise, personality, approach, or results you deliver.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">A/B Testing</div>
+                    <div class="step-description">
+                        Testing two versions of content to see which performs better. Example: posting same content with different headlines to see which gets more engagement.
+                    </div>
+                </div>
+                
+                <h3 id="content-terms" style="font-size: 15px; color: #667eea; margin: 30px 0 10px 0;">Content Creation Terms</h3>
+                
+                <div class="step-card">
+                    <div class="step-title">Evergreen Content</div>
+                    <div class="step-description">
+                        Content that remains relevant and valuable over time (opposite of trending/timely content). Examples: tutorials, how-to guides, foundational concepts. Continues to attract audience long after posting.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">UGC (User-Generated Content)</div>
+                    <div class="step-description">
+                        Content created by your audience about your brand - reviews, testimonials, photos using your product, etc. Highly valuable as social proof and builds community.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">Carousel</div>
+                    <div class="step-description">
+                        Multi-image post that users swipe through (Instagram/LinkedIn). Great for step-by-step guides, lists, before-and-after, or educational content. Higher engagement than single images.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">Reel / TikTok</div>
+                    <div class="step-description">
+                        Short-form vertical video content (15-90 seconds). Highly favored by algorithms. Best for quick tips, entertaining content, trending formats, or behind-the-scenes.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">Thread</div>
+                    <div class="step-description">
+                        Series of connected posts/tweets telling a story or explaining a concept. Popular on Twitter/X. Allows you to go deeper than single post limit.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">Hook</div>
+                    <div class="step-description">
+                        Opening line or first 1-3 seconds of content designed to grab attention and make people stop scrolling. Critical for performance since most people scroll quickly.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">CTA (Call-to-Action)</div>
+                    <div class="step-description">
+                        Specific instruction telling audience what to do next. Examples: "Follow for more", "Link in bio", "Comment YES", "Save this post". Every post should have one.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">Story / Highlight</div>
+                    <div class="step-description">
+                        <strong>Story:</strong> Temporary content (24 hours) shown at top of feed. Good for casual, frequent updates.<br>
+                        <strong>Highlight:</strong> Permanent collection of saved Stories on your profile. Organized by topic for new visitors.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">Content Pillars</div>
+                    <div class="step-description">
+                        3-5 main topics you consistently create content about. Helps maintain focus and positions you as expert. Example: Fitness creator's pillars might be Workouts, Nutrition, Mindset, Recovery.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">Repurposing</div>
+                    <div class="step-description">
+                        Taking one piece of content and reformatting it for multiple platforms or formats. Example: Blog post → Twitter thread → Instagram carousel → Email newsletter → YouTube video.
+                    </div>
+                </div>
+                
+                <h3 id="business-terms" style="font-size: 15px; color: #667eea; margin: 30px 0 10px 0;">Business & Monetization Terms</h3>
+                
+                <div class="skill-category" style="background: #fff3e0; border: 2px solid #ff9800;">
+                    <h3 style="color: #e65100;"><span class="skill-icon">💰</span>Revenue Models</h3>
+                    <div style="padding: 8px 1%; font-size: 13px; line-height: 1.8;">
+                        <strong>Monetization:</strong> Process of earning money from your personal brand. Multiple streams recommended: products, services, sponsorships, affiliates.<br><br>
+                        
+                        <strong>Affiliate Marketing:</strong> Earning commission by promoting other companies' products. You get unique link, earn 5-50% per sale. Amazon Associates, ShareASale are examples.<br><br>
+                        
+                        <strong>Sponsorship:</strong> Brand pays you to create content featuring their product/service. Usually one-time payment per post or campaign.<br><br>
+                        
+                        <strong>Media Kit:</strong> Professional document showcasing your stats, audience demographics, services, and rates. Sent to brands when pitching partnerships.<br><br>
+                        
+                        <strong>Rate Card:</strong> Your pricing sheet for different services (post, story, video, etc.). Updated as you grow. Start rates based on follower count and engagement.<br><br>
+                        
+                        <strong>Digital Product:</strong> Downloadable product like ebook, template, course, or guide. Created once, sold repeatedly. High profit margin.<br><br>
+                        
+                        <strong>MRR (Monthly Recurring Revenue):</strong> Predictable income from subscriptions or memberships. Most sustainable business model. Examples: Patreon, membership sites.<br><br>
+                        
+                        <strong>Coaching/Consulting:</strong> Selling your time and expertise 1-on-1 or in groups. Higher ticket pricing ($500-$5000+) but limited by your time.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">Lead</div>
+                    <div class="step-description">
+                        Potential customer who has shown interest by sharing contact info (usually email). Quality leads are people who match your target audience and have engagement intent.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">Email List</div>
+                    <div class="step-description">
+                        Collection of email addresses from people interested in your content. Most valuable asset - you own it (unlike social followers). Average email list subscriber worth $1-$10/month.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">Sales Funnel</div>
+                    <div class="step-description">
+                        Automated sequence moving people from awareness to purchase. Example: Free lead magnet → Welcome emails → Educational content → Offer → Purchase → Upsell.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">Landing Page</div>
+                    <div class="step-description">
+                        Single-purpose webpage designed for specific action - sign up, buy, register. No navigation distractions. Optimized for conversion.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">Upsell / Cross-sell</div>
+                    <div class="step-description">
+                        <strong>Upsell:</strong> Offering higher-priced version or add-on after initial purchase.<br>
+                        <strong>Cross-sell:</strong> Offering complementary product. Example: Bought workout guide? Get nutrition guide for 50% off.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">Passive Income</div>
+                    <div class="step-description">
+                        Income earned with minimal ongoing effort after initial setup. Examples: digital products, affiliate links, ad revenue, automated courses. Not truly "passive" but less time-intensive than active income.
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">Scalable</div>
+                    <div class="step-description">
+                        Ability to increase revenue without proportionally increasing effort/time. Digital products are scalable (sell to 1 or 1000 with same effort). 1-on-1 coaching is not scalable.
+                    </div>
+                </div>
+                
+                <div class="skill-category" style="background: #f3e5f5; border: 2px solid #9c27b0;">
+                    <h3 style="color: #6a1b9a;"><span class="skill-icon">📊</span>Additional Key Terms</h3>
+                    <div style="padding: 8px 1%; font-size: 13px; line-height: 1.8;">
+                        <strong>Engagement Pod:</strong> Group of creators who agree to engage with each other's content early to boost algorithmic performance.<br><br>
+                        
+                        <strong>Creator Economy:</strong> Economic system where individuals monetize their content, skills, and influence directly to audience. Estimated $100B+ market.<br><br>
+                        
+                        <strong>Social Proof:</strong> Evidence that others trust you - testimonials, follower count, engagement, media mentions. Builds credibility.<br><br>
+                        
+                        <strong>Authority:</strong> Recognized expertise in your field. Built through consistent valuable content, results, and time. Essential for charging premium prices.<br><br>
+                        
+                        <strong>Personal Brand:</strong> How you're perceived by others. Combination of your expertise, personality, values, and unique positioning.<br><br>
+                        
+                        <strong>Content Calendar:</strong> Planned schedule of what content you'll post and when. Helps maintain consistency and strategic approach.<br><br>
+                        
+                        <strong>Viral Coefficient:</strong> Average number of new users each existing user brings. Above 1.0 = exponential growth.<br><br>
+                        
+                        <strong>Organic Growth:</strong> Growing your audience naturally without paid advertising. Through quality content and genuine engagement.
+                    </div>
+                </div>
+                
+                <div class="tip-box">
+                    <strong>📚 Pro Tip:</strong> Don't try to memorize everything! Bookmark this glossary and refer back when you encounter unfamiliar terms. Understanding will come naturally as you implement the strategies.
+                </div>
+                
+                <button class="action-btn" onclick="alert('Keep this glossary handy! Understanding the language of personal branding helps you learn faster and communicate better. 📖')">Bookmark This Page</button>
+            </div>
+            
+            <div id="steps" class="section">
+                <h2 style="font-size: 16px; color: #2d3748; margin-bottom: 15px;">30-Day Brand Building Plan</h2>
+                
+                <div class="step-card">
+                    <div class="step-title">Week 1: Foundation</div>
+                    <div class="step-description">
+                        • Conduct personal SWOT analysis<br>
+                        • Define your unique value proposition<br>
+                        • Identify your target audience<br>
+                        • Choose 2-3 primary platforms<br>
+                        • Update all social media profiles
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 25%"></div>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">Week 2: Content Strategy</div>
+                    <div class="step-description">
+                        • Create content pillars (3-5 topics)<br>
+                        • Plan 2 weeks of content<br>
+                        • Design branded templates<br>
+                        • Set up content calendar<br>
+                        • Post 3-5 times this week
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 50%"></div>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">Week 3: Engagement</div>
+                    <div class="step-description">
+                        • Engage with 10 people daily<br>
+                        • Join 3 relevant communities<br>
+                        • Reach out to 5 potential connections<br>
+                        • Collaborate with 1 peer<br>
+                        • Share user-generated content
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%"></div>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">Week 4: Optimization</div>
+                    <div class="step-description">
+                        • Analyze content performance<br>
+                        • Refine messaging based on feedback<br>
+                        • Create one signature piece of content<br>
+                        • Plan next month's strategy<br>
+                        • Celebrate wins and learn from misses
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 100%"></div>
+                    </div>
+                </div>
+                
+                <div class="tip-box">
+                    <strong>⚡ Quick Win:</strong> Start documenting your journey. People connect with authentic stories and growth narratives more than polished perfection.
+                </div>
+            </div>
+            
+            <div id="skills" class="section">
+                <h2 style="font-size: 16px; color: #2d3748; margin-bottom: 15px;">Essential Skills to Develop</h2>
+                
+                <div class="skill-category">
+                    <h3><span class="skill-icon">💬</span>Communication Skills</h3>
+                    <ul class="skill-list">
+                        <li class="skill-item">Storytelling and narrative building</li>
+                        <li class="skill-item">Clear and concise writing</li>
+                        <li class="skill-item">Public speaking and presentations</li>
+                        <li class="skill-item">Active listening and empathy</li>
+                    </ul>
+                </div>
+                
+                <div class="skill-category">
+                    <h3><span class="skill-icon">🎨</span>Content Creation</h3>
+                    <ul class="skill-list">
+                        <li class="skill-item">Graphic design basics (Canva, Figma)</li>
+                        <li class="skill-item">Video editing and production</li>
+                        <li class="skill-item">Photography and visual composition</li>
+                        <li class="skill-item">Copywriting and headlines</li>
+                    </ul>
+                </div>
+                
+                <div class="skill-category">
+                    <h3><span class="skill-icon">📊</span>Marketing & Strategy</h3>
+                    <ul class="skill-list">
+                        <li class="skill-item">SEO and keyword research</li>
+                        <li class="skill-item">Social media algorithms understanding</li>
+                        <li class="skill-item">Analytics and data interpretation</li>
+                        <li class="skill-item">Email marketing fundamentals</li>
+                    </ul>
+                </div>
+                
+                <div class="skill-category">
+                    <h3><span class="skill-icon">🤝</span>Networking & Relationships</h3>
+                    <ul class="skill-list">
+                        <li class="skill-item">Building genuine connections</li>
+                        <li class="skill-item">Collaboration and partnership skills</li>
+                        <li class="skill-item">Personal outreach strategies</li>
+                        <li class="skill-item">Community management</li>
+                    </ul>
+                </div>
+                
+                <div class="skill-category">
+                    <h3><span class="skill-icon">🧠</span>Personal Development</h3>
+                    <ul class="skill-list">
+                        <li class="skill-item">Self-awareness and reflection</li>
+                        <li class="skill-item">Time management and productivity</li>
+                        <li class="skill-item">Resilience and handling criticism</li>
+                        <li class="skill-item">Continuous learning mindset</li>
+                    </ul>
+                </div>
+                
+                <button class="action-btn" onclick="alert('Great! Pick one skill to focus on this week and dedicate 30 minutes daily to practice.')">Start Skill Development</button>
+            </div>
+            
+            <div id="checklist" class="section">
+                <h2 style="font-size: 16px; color: #2d3748; margin-bottom: 15px;">Daily Growth Checklist</h2>
+                
+                <ul class="checklist">
+                    <li class="checklist-item">
+                        <input type="checkbox" id="check1" onchange="toggleComplete(this)">
+                        <label for="check1">Post or share valuable content</label>
+                    </li>
+                    <li class="checklist-item">
+                        <input type="checkbox" id="check2" onchange="toggleComplete(this)">
+                        <label for="check2">Engage with 5+ posts in your niche</label>
+                    </li>
+                    <li class="checklist-item">
+                        <input type="checkbox" id="check3" onchange="toggleComplete(this)">
+                        <label for="check3">Respond to all comments and messages</label>
+                    </li>
+                    <li class="checklist-item">
+                        <input type="checkbox" id="check4" onchange="toggleComplete(this)">
+                        <label for="check4">Learn something new (article, video, course)</label>
+                    </li>
+                    <li class="checklist-item">
+                        <input type="checkbox" id="check5" onchange="toggleComplete(this)">
+                        <label for="check5">Connect with 1 new person</label>
+                    </li>
+                    <li class="checklist-item">
+                        <input type="checkbox" id="check6" onchange="toggleComplete(this)">
+                        <label for="check6">Review analytics and track progress</label>
+                    </li>
+                    <li class="checklist-item">
+                        <input type="checkbox" id="check7" onchange="toggleComplete(this)">
+                        <label for="check7">Work on a long-form content piece</label>
+                    </li>
+                    <li class="checklist-item">
+                        <input type="checkbox" id="check8" onchange="toggleComplete(this)">
+                        <label for="check8">Reflect on wins and areas for improvement</label>
+                    </li>
+                </ul>
+                
+                <div class="tip-box" style="margin-top: 20px;">
+                    <strong>🎯 Today's Focus:</strong> You don't need to do everything. Pick 3-5 items that align with your current goals and energy level. Progress over perfection!
+                </div>
+                
+                <button class="action-btn" onclick="resetChecklist()">Reset Checklist for Tomorrow</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            const tabs = document.querySelectorAll('.tab');
+            
+            sections.forEach(section => section.classList.remove('active'));
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        function toggleComplete(checkbox) {
+            const item = checkbox.parentElement;
+            if (checkbox.checked) {
+                item.classList.add('completed');
+            } else {
+                item.classList.remove('completed');
+            }
+        }
+        
+        function resetChecklist() {
+            const checkboxes = document.querySelectorAll('.checklist-item input');
+            const items = document.querySelectorAll('.checklist-item');
+            
+            checkboxes.forEach(cb => cb.checked = false);
+            items.forEach(item => item.classList.remove('completed'));
+            
+            alert('✅ Checklist reset! Ready for a new day of growth!');
+        }
+    </script>
+</body>
+</html>
